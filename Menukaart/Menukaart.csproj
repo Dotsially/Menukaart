@@ -61,15 +61,25 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+	    <PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
+        <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Update="View\MainPageView.xaml.cs">
 	    <DependentUpon>MainPageView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\MapPageView.xaml.cs">
+	    <DependentUpon>MapPageView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\MapPageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\MenuKaartStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
