@@ -3,7 +3,7 @@ using CommunityToolkit.Maui.Core;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
-namespace Menukaart;
+namespace Menukaart.View;
 
 public partial class MapPage : ContentPage
 {
@@ -18,7 +18,11 @@ public partial class MapPage : ContentPage
         Location location = new Location(51.5840246, 4.7953861, 17);
         Location locationPin = new Location(51.5840260, 4.7953861, 17);
         MapSpan mapSpan = new MapSpan(location, 0.01, 0.01);
-       
+        MyMap.MoveToRegion(mapSpan);
+        MyMap.IsShowingUser = true;
+        MyMap.Pins.Add(new Pin() { Location = locationPin, Label = "My Home", Address = "My Address" });
+
+
         Circle circle = new Circle()
         {
             Center = location,
@@ -27,6 +31,8 @@ public partial class MapPage : ContentPage
             StrokeWidth = 8,
             FillColor = Color.FromRgba(255, 0, 0, 64)
         };
+
+        MyMap.MapElements.Add(circle);
 
         var dispatcher = Dispatcher.CreateTimer();
         dispatcher.Interval = TimeSpan.FromSeconds(30);

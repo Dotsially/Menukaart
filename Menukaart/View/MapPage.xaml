@@ -1,0 +1,12 @@
+ ﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             x:Class="Menukaart.View.MapPage">
+    <VerticalStackLayout>
+        <maps:Map x:Name="MyMap" MapType="Street" >
+        </maps:Map>
+        <Button Text="Start listering" Clicked="StartListening"/>
+    </VerticalStackLayout>
+
+</ContentPage>

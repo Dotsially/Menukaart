@@ -71,13 +71,13 @@
 	  <Compile Update="View\MainPageView.xaml.cs">
 	    <DependentUpon>MainPageView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\MapPageView.xaml.cs">
-	    <DependentUpon>MapPageView.xaml</DependentUpon>
+	  <Compile Update="View\MapPage.xaml.cs">
+	    <DependentUpon>MapPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\MapPageView.xaml">
+	  <MauiXaml Update="View\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\MenuKaartStyles.xaml">
