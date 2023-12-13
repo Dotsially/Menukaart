@@ -8,6 +8,8 @@ namespace Menukaart.View;
 public partial class MapPage : ContentPage
 {
     private readonly IGeolocation _geolocation;
+    Circle circle;
+    MapSpan mapSpan;
 
     public MapPage(IGeolocation geolocation)
     {
@@ -16,13 +18,13 @@ public partial class MapPage : ContentPage
 
         Location location = new Location(51.5840246, 4.7953861, 17);
         Location locationPin = new Location(51.5840260, 4.7953861, 17);
-        MapSpan mapSpan = new MapSpan(location, 0.01, 0.01);
+        mapSpan = new MapSpan(location, 0.01, 0.01);
         MyMap.MoveToRegion(mapSpan);
         MyMap.IsShowingUser = true;
         MyMap.Pins.Add(new Pin() { Location = locationPin, Label = "My Home", Address = "My Address" });
 
 
-        Circle circle = new Circle()
+        circle = new Circle()
         {
             Center = location,
             Radius = Distance.FromMeters(50),
@@ -54,5 +56,12 @@ public partial class MapPage : ContentPage
         var newLocation = $"{e.Location.Latitude} {e.Location.Longitude}";
         var toast = Toast.Make(newLocation, ToastDuration.Short);
         toast.Show();
+        Location location = new Location(e.Location.Latitude, e.Location.Longitude);
+        circle.Center = new Location(e.Location.Latitude, e.Location.Longitude);
+        mapSpan = new MapSpan(location, 0.01, 0.01);
+        MyMap.Pins.Clear();
+        MyMap.Pins.Add(new Pin() { Location = location, Label = "My Home", Address = "My Address" });
+        MyMap.MoveToRegion(mapSpan);
+
     }
 }
