@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Menukaart.DataManagement.DataTypes;
 using SQLite;
 
-namespace Menukaart
+namespace Menukaart.DataManagement
 {
     public class DatabaseService
     {

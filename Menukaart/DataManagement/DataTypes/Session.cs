@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace Menukaart
+namespace Menukaart.DataManagement.DataTypes
 {
     [Table("session")]
     public class Session
@@ -13,7 +13,7 @@ namespace Menukaart
         [PrimaryKey]
         [AutoIncrement]
         [Column("id")]
-        public int id { get; set;  }
+        public int id { get; set; }
         [Column("date")]
         public DateTime date { get; set; }
         [Column("time")]
