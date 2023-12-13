@@ -8,7 +8,6 @@ namespace Menukaart.View;
 public partial class MapPage : ContentPage
 {
     private readonly IGeolocation _geolocation;
-    int count = 0;
 
     public MapPage(IGeolocation geolocation)
     {

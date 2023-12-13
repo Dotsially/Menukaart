@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Menukaart.View;
+using Microsoft.Extensions.Logging;
 
 namespace Menukaart
 {
@@ -9,6 +11,9 @@ namespace Menukaart
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMediaElement()
+                .UseMauiMaps()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -18,7 +23,8 @@ namespace Menukaart
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-
+            builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+            builder.Services.AddTransient<MapPage>();
             return builder.Build();
         }
     }

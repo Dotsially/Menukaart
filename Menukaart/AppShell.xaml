@@ -8,8 +8,9 @@
     Title="Menukaart">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPageView}"
-        Route="MainPageView" />
+        Title="MapPage"
+        ContentTemplate="{DataTemplate local:MapPage}"
+        Route="MapPage" />
+    
 
 </Shell>
