@@ -34,6 +34,11 @@ namespace Menukaart.DataManagement
             await _connection.InsertAsync(session);
         }
 
+        public async Task Create(List<Session> session)
+        {
+            await _connection.InsertAllAsync(session);
+        }
+
         public async Task Update(Session session)
         {
             await _connection.UpdateAsync(session);
@@ -42,6 +47,11 @@ namespace Menukaart.DataManagement
         public async Task Delete(Session session)
         {
             await _connection.DeleteAsync(session);
+        }
+
+        public async Task Wipe()
+        {
+            await _connection.DeleteAllAsync<Session>();
         }
     }
 }
