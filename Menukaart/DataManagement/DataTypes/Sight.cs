@@ -10,14 +10,21 @@ namespace Menukaart.DataManagement.DataTypes
     
     public class Sight
     {
-        private int id { get; }
-        private string name { get; }
-        private string description { get; }
-        private string extraInfoURL { get; }
-        private Image image { get; }
-        private float longitude { get; }
-        private float latitude { get; }
-        private float altitude { get; }
+        //information about sight
+        public int id { get; }
+        public string name { get; }
+        public string description { get; }
+        public string extraInfoURL { get; }
+        public Image image { get; }
+
+        //variables for position
+        public float longitude { get; }
+        public float latitude { get; }
+        public float altitude { get; }
+
+        //status of sight
+        public bool visited { get; set; }
+        
         
 
         public Sight(int id, string name, string description, string extraInfoURL, Image image, float longitude, float latitude, float altitude) 
@@ -30,6 +37,7 @@ namespace Menukaart.DataManagement.DataTypes
             this.longitude = longitude;
             this.latitude = latitude;
             this.altitude = altitude;
+            this.visited = false;
         }
        
     }
