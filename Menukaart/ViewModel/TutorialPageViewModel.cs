@@ -6,7 +6,7 @@ namespace Menukaart.ViewModel
 {
     public partial class TutorialPageViewModel : ObservableObject
     {
-        [ObservableProperty] private ObservableCollection<TutorialPageModel> _tutorialSections;
+        [ObservableProperty] private ObservableCollection<TutorialPageModel> _tutorialSections = new();
 
         public TutorialPageViewModel()
         {
