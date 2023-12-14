@@ -57,8 +57,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\lovendijkstraat-avans.jpg" />
 	  <None Remove="Resources\Images\AGS_Logo.svg" />
 	  <None Remove="Resources\Images\VVV_Logo.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Include="Resources\Images\lovensdijkstraat_avans.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -73,6 +78,9 @@
 	  <Compile Update="View\MainPageView.xaml.cs">
 	    <DependentUpon>MainPageView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\PlaceOfInterestView.xaml.cs">
+	    <DependentUpon>PlaceOfInterestView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -80,6 +88,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\MainPageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\PlaceOfInterestView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
