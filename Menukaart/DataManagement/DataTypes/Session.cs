@@ -13,7 +13,7 @@ namespace Menukaart.DataManagement.DataTypes
         [PrimaryKey]
         [AutoIncrement]
         [Column("id")]
-        public int id { get; set; }
+        public int id { get; }
         [Column("date")]
         public DateTime date { get; set; }
         [Column("time")]
