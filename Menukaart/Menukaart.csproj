@@ -57,6 +57,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\lovendijkstraat-avans.jpg" />
+	  <None Remove="Resources\Images\AGS_Logo.svg" />
+	  <None Remove="Resources\Images\VVV_Logo.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Include="Resources\Images\lovensdijkstraat_avans.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -68,8 +79,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\MainPageView.xaml.cs">
-	    <DependentUpon>MainPageView.xaml</DependentUpon>
+	  <Compile Update="View\PlaceOfInterestView.xaml.cs">
+	    <DependentUpon>PlaceOfInterestView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\MapPageView.xaml.cs">
 	    <DependentUpon>MapPageView.xaml</DependentUpon>
@@ -83,7 +94,7 @@
 	  <MauiXaml Update="Resources\Styles\MenuKaartStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\MainPageView.xaml">
+	  <MauiXaml Update="View\PlaceOfInterestView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
