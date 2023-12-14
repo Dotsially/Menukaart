@@ -27,7 +27,7 @@
 
             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleText}" Text="Menu-Kaart" VerticalOptions="Center"/>
 
-            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center"/>
+            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Command="{Binding NavigateToTutorialCommand}"/>
 
             <Image Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Source="vvv_logo.png" HeightRequest="150"/>
 

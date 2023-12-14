@@ -11,6 +11,10 @@
     <Style x:Key="HelpButton" TargetType="Button">
         <Setter Property="WidthRequest" Value="40"/>
         <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="CornerRadius" Value="20"/>
+
+        <Setter Property="Text" Value="?"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
     </Style>
 
     <Style x:Key="TitleText" TargetType="Label">
