@@ -21,11 +21,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleText}" Text="Menu-Kaart" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleText}" Text="Menu-Kaart" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
 
             <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Command="{Binding NavigateToTutorialCommand}"/>
 
