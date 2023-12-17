@@ -14,7 +14,7 @@ namespace Menukaart.ViewModel
             TutorialSections.Add( new()
             {
                 Title = "Select a route",
-                Description = "To get started, press the \"Start Route\" button You'll now see a list of curated routes, each with a unique theme or culinary focus. Examples might include \"Local Favorites,\" \"International Delights,\" or \"Vegetarian Wonders.\" scroll through the routes to explore the different options. Select a route and press the \"Start route\" button to get the directions to your first restaurant!",
+                Description = "To get started, press the \"Start Route\" button. You'll now see a list of curated routes, each with a unique theme or culinary focus. Examples include \"Local Favorites,\" \"International Delights,\" or \"Vegetarian Wonders.\" scroll through the routes to explore the different options. Select a route and press the \"Start route\" button to get the directions to your first restaurant!",
                 ImageName = "ic_route_list.png"
             });
 
@@ -22,7 +22,7 @@ namespace Menukaart.ViewModel
             TutorialSections.Add(new()
             {
                 Title = "Finding your way",
-                Description = "Once you've selected a route, the app may provide a map or directions to the first restaurant. Follow the guidance to embark on your delicious journey. Arrive at the restaurant and the app will greet you with the details of that place.",
+                Description = "Once you've selected a route, the app will provide a map with directions to the first restaurant. Follow the guidance to embark on your delicious journey. Arrive at the restaurant and the app will greet you with the details of that place.",
                 ImageName = "ic_route.png"
             });
 
