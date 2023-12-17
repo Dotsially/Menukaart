@@ -13,24 +13,38 @@ namespace Menukaart.ViewModel
         {
             TutorialSections.Add( new()
             {
-                Title = "Tutorial title 1",
-                Description = "Tutorial description",
-                ImageName = "vvv_logo.png"
+                Title = "Select a route",
+                Description = "To get started, press the \"Start Route\" button You'll now see a list of curated routes, each with a unique theme or culinary focus. Examples might include \"Local Favorites,\" \"International Delights,\" or \"Vegetarian Wonders.\" scroll through the routes to explore the different options. Select a route and press the \"Start route\" button to get the directions to your first restaurant!",
+                ImageName = "ic_route_list.png"
             });
 
 
             TutorialSections.Add(new()
             {
-                Title = "Tutorial title 2",
-                Description = "Tutorial description",
-                ImageName = "vvv_logo.png"
+                Title = "Finding your way",
+                Description = "Once you've selected a route, the app may provide a map or directions to the first restaurant. Follow the guidance to embark on your delicious journey. Arrive at the restaurant and the app will greet you with the details of that place.",
+                ImageName = "ic_route.png"
             });
 
             TutorialSections.Add(new()
             {
-                Title = "Tutorial title 3",
-                Description = "Tutorial description",
-                ImageName = "vvv_logo.png"
+                Title = "Bon appetit",
+                Description = "Indulge in the culinary delights the restaurant offers, and savor the experience! After each stop, the app will guide you to the next venue until you've completed the entire route.",
+                ImageName = "ic_restaurant.png"
+            });
+
+            TutorialSections.Add(new()
+            {
+                Title = "Session information",
+                Description = "After completing a route or exiting, revisit your culinary journey by tapping \"Show passed Sessions.\" This feature shows details of completed routes, including the restaurants you've visited, the total distance that you've traveled and the time you've spend walking the route.",
+                ImageName = "ic_session_statistics.svg"
+            });
+
+            TutorialSections.Add(new()
+            {
+                Title = "Stuck? Don't worry!",
+                Description = "If you ever find yourself stuck or have questions about the app, don't worry! You can access the help menu by tapping the \"?\" button in the top right corner of the screen. This will take you back to these instructions and provide additional information to assist you. Happy dining!",
+                ImageName = "ic_help.png"
             });
         }
 
