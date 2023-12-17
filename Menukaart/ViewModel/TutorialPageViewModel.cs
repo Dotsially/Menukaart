@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Menukaart.Model;
 
 namespace Menukaart.ViewModel
@@ -10,12 +11,31 @@ namespace Menukaart.ViewModel
 
         public TutorialPageViewModel()
         {
-            _tutorialSections.Add( new()
+            TutorialSections.Add( new()
             {
-                Title = "Tutorial title",
+                Title = "Tutorial title 1",
+                Description = "Tutorial description",
+                ImageName = "vvv_logo.png"
+            });
+
+
+            TutorialSections.Add(new()
+            {
+                Title = "Tutorial title 2",
+                Description = "Tutorial description",
+                ImageName = "vvv_logo.png"
+            });
+
+            TutorialSections.Add(new()
+            {
+                Title = "Tutorial title 3",
                 Description = "Tutorial description",
                 ImageName = "vvv_logo.png"
             });
         }
+
+        [RelayCommand]
+        Task Back() => Shell.Current.GoToAsync("..");
+
     }
 }
