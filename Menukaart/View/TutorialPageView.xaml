@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:Menukaart.ViewModel"
              xmlns:model="clr-namespace:Menukaart.Model"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:DataType="viewmodel:TutorialPageViewModel"
              x:Class="Menukaart.View.TutorialPageView"
              Shell.NavBarIsVisible="False">
@@ -20,7 +21,11 @@
 
                         <VerticalStackLayout Spacing="20">
                             <Label Style="{StaticResource TitleText}" Text="{Binding Title}" HorizontalOptions="Center"/>
-                            <Image Source="{Binding ImageName}" HeightRequest="100"/>
+                        <Image Source="{Binding ImageName}" HeightRequest="100">
+                            <Image.Behaviors>
+                                <mct:IconTintColorBehavior TintColor="{StaticResource Primary}"/>
+                            </Image.Behaviors>
+                        </Image>
                             <Label Style="{StaticResource BodyText}" Text="{Binding Description}"/>
                         </VerticalStackLayout>
                     </DataTemplate>
