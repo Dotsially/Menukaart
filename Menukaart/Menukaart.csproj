@@ -58,7 +58,12 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\AGS_Logo.svg" />
-	  <None Remove="Resources\Images\VVV_Logo.svg" />
+	  <None Remove="Resources\Images\ic_help.svg"/>
+	  <None Remove="Resources\Images\ic_restaurant.svg"/>
+	  <None Remove="Resources\Images\ic_route.svg"/>
+	  <None Remove="Resources\Images\ic_route_list.svg" />
+	  <None Remove="Resources\Images\ic_session_statistics.svg"/>
+	  <None Remove="Resources\Images\VVV_Logo.svg"/>
 	</ItemGroup>
 
 	<ItemGroup>
