@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui;
+﻿using Menukaart.DataManagement;
+using Menukaart.View;
 using Microsoft.Extensions.Logging;
 
 namespace Menukaart
@@ -17,8 +19,12 @@ namespace Menukaart
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<DatabaseService>();
+            builder.Services.AddTransient<DatabasePage>();
+
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

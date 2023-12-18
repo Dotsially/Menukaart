@@ -13,5 +13,4 @@ public partial class MainPageViewModel : ObservableObject
 
     [RelayCommand]
     Task NavigateToTutorial() => Shell.Current.GoToAsync(nameof(TutorialPageView));
-    
 }
