@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Menukaart.DataManagement
 {
-    using CarPlay;
+  
     using global::Menukaart.DataManagement.DataTypes;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+  
 
     namespace Menukaart.Model
     {
@@ -22,18 +19,18 @@ namespace Menukaart.DataManagement
             public SightData()
             {
                     sightList.Add(new Sight(sightList.Count, 
-                                          "Proeflokaal Bregje",
-                                          "description",
-                                          "inforUrl",
-                                          null,
-                                          new Location(51.58880586602344, 4.772186348316208)));
+                                            "Proeflokaal Bregje",
+                                            "description",
+                                            "inforUrl",
+                                            null,
+                                            new Location(51.58880586602344, 4.772186348316208)));
 
                     sightList.Add(new Sight(sightList.Count,
-                                         "Restaurant chocolat",
-                                         "description",
-                                         "infoUrl",
-                                         null,
-                                         new Location(51.588693760346985, 4.774793660010751)));
+                                            "Restaurant chocolat",
+                                            "description",
+                                            "infoUrl",
+                                            null,
+                                            new Location(51.588693760346985, 4.774793660010751)));
 
                     sightList.Add(new Sight(sightList.Count,
                                             "Gauchos",

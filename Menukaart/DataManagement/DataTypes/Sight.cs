@@ -18,25 +18,21 @@ namespace Menukaart.DataManagement.DataTypes
         public Image image { get; }
 
         //variables for position
-        public float longitude { get; }
-        public float latitude { get; }
-        public float altitude { get; }
+        Location location { get; }
 
         //status of sight
         public bool visited { get; set; }
         
         
 
-        public Sight(int id, string name, string description, string extraInfoURL, Image image, float longitude, float latitude, float altitude) 
+        public Sight(int id, string name, string description, string extraInfoURL, Image image, Location location) 
         {
             this.id = id;
             this.name = name;
             this.description = description;
             this.extraInfoURL = extraInfoURL;
             this.image = image;
-            this.longitude = longitude;
-            this.latitude = latitude;
-            this.altitude = altitude;
+            this.location = location;
             this.visited = false;
         }
        
