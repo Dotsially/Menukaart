@@ -20,7 +20,7 @@ namespace Menukaart
                 });
 
             builder.Services.AddSingleton<DatabaseService>();
-            builder.Services.AddTransient<DatabasePage>();
+            builder.Services.AddTransient<DatabasePageView>();
 
 
 #if DEBUG

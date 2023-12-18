@@ -4,11 +4,11 @@ namespace Menukaart
 {
     public partial class App : Application
     {
-        public App(DatabasePage databasePage)
+        public App(DatabasePageView databasePage)
         {
             InitializeComponent();
 
-            MainPage = databasePage;
+            MainPage = new AppShell();
         }
     }
 }

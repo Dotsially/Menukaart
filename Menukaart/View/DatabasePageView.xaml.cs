@@ -4,11 +4,11 @@ using Menukaart.DataManagement.DataTypes;
 
 namespace Menukaart.View;
 
-public partial class DatabasePage : ContentPage
+public partial class DatabasePageView : ContentPage
 {
     private readonly DatabaseService _databaseService;
 
-	public DatabasePage(DatabaseService databaseService)
+	public DatabasePageView(DatabaseService databaseService)
 	{
 		InitializeComponent();
 		_databaseService = databaseService;
