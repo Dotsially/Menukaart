@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using SQLite;
 
 namespace Menukaart.DataManagement.DataTypes
 {
-    [Table("datalink")]
+    [Table(Constants.DatalinkTable)]
     public class Datalink
     {
+        [PrimaryKey]
+        [AutoIncrement]
+        [Column("id")]
+        public int id { get; set; }
+
         [Column("session_id")]
-        public int session_id { get; }
+        public int session_id { get; set; }
         [Column("sight_id")]
-        public int sight_id { get; }
+        public int sight_id { get; set; }
+
+        public override string ToString()
+        {
+            return "From session: " + session_id + "\t sight: " + sight_id;
+        }
     }
 }
