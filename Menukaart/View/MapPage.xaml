@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
-             x:Class="Menukaart.View.MapPage">
+             x:Class="Menukaart.View.MapPage"
+             x:DataType="viewmodel:MapPageViewModel">
+    
 
     <StackLayout VerticalOptions="FillAndExpand">
         <maps:Map x:Name="map" MapType="Street" VerticalOptions="FillAndExpand" >

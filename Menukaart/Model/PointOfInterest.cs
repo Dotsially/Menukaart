@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace Menukaart.Model
 {
-    internal class POI
+    internal class PointOfInterest
     {
+        private int ID;
+
         public string Name;
 
         public Location Location;
 
-        public POI(string name, Location location) 
+        public string Description;
+
+        public PointOfInterest(string name, Location location) 
         {
             this.Name = name;
             this.Location = location;

@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using Menukaart.Model;
 
 namespace Menukaart.View;
 
@@ -10,19 +11,20 @@ public partial class MapPage : ContentPage
 {
     private readonly IGeolocation _geolocation;
     MapSpan mapSpan;
-
-
+    PointOfInterestList poiList;
 
     public MapPage(IGeolocation geolocation)
     {
         _geolocation = geolocation;
+        poiList = new();
+        poiList.InitializeList();
         InitializeComponent();
 
-        Location location = new Location(51.5840246, 4.7953861, 17);
-        mapSpan = new MapSpan(location, 0.01, 0.01);
+        var poi = PointOfInterestList.poiList.First();
+        mapSpan = new MapSpan(poi.Location, 0.01, 0.01);
         map.MoveToRegion(mapSpan);
         map.IsShowingUser = true;
-        map.Pins.Add(new Pin() { Location = location, Label = "My Home", Address = "My Address" });
+        map.Pins.Add(new Pin() { Location = poi.Location, Label = poi.Name, Address = "" });
 
         StartListening();
     }
@@ -49,5 +51,10 @@ public partial class MapPage : ContentPage
 
     }
 
+    private async void ReturnToRoutes(object sender, EventArgs e)
+    {
 
-}
+    }
+
+
+    }

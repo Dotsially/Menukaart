@@ -4,7 +4,6 @@
              x:Class="Menukaart.View.PlaceOfInterestView"
              xmlns:viewmodel="clr-namespace:Menukaart.ViewModel"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             x:DataType="viewmodel:MainPageViewModel"
              Shell.NavBarIsVisible="False">
 
     <Page.Behaviors>
