@@ -4,10 +4,10 @@
              x:Class="Menukaart.View.DatabasePageView"
              Title="DatabasePage">
     <FlexLayout Direction="Column">
-        <ListView x:Name="listView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="Temp">
+        <ListView x:Name="listView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="OpenSelectedItem" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
+                    <ViewCell >
                         <VerticalStackLayout Padding="5">
                             <Label Text="{Binding id}"/>
                             <Label Text="{Binding date}"/>
