@@ -12,7 +12,6 @@ namespace Menukaart
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
-                .UseMauiCommunityToolkitMediaElement()
                 .UseMauiMaps()
                 .ConfigureFonts(fonts =>
                 {
