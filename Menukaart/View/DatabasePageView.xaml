@@ -3,21 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Menukaart.View.DatabasePageView"
              Title="DatabasePage">
-    <FlexLayout Direction="Column">
-        <ListView x:Name="listView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="OpenSelectedItem" >
-            <ListView.ItemTemplate>
+    <StackLayout>
+        <CollectionView ItemsSource="{Binding Sessions}"
+              SelectionMode="Single"
+              SelectedItem="{Binding SelectedSession}"
+              SelectionChangedCommand="{Binding ItemSelectedCommand}"
+              SelectionChangedCommandParameter="{Binding SelectedSession}">
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell >
-                        <VerticalStackLayout Padding="5">
-                            <Label Text="{Binding id}"/>
-                            <Label Text="{Binding date}"/>
-                            <Label Text="{Binding time}"/>
-                            <Label Text="{Binding distance}"/>
-                        </VerticalStackLayout>
-                    </ViewCell>
+                    <VerticalStackLayout Padding="5">
+                        <Label Text="{Binding id}"/>
+                        <Label Text="{Binding date}"/>
+                        <Label Text="{Binding time}"/>
+                        <Label Text="{Binding distance}"/>
+                    </VerticalStackLayout>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-
-        </ListView>
-    </FlexLayout>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
 </ContentPage>

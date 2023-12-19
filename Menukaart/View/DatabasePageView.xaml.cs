@@ -12,8 +12,7 @@ public partial class DatabasePageView : ContentPage
 	public DatabasePageView(DatabaseService databaseService)
 	{
 		InitializeComponent();
-        BindingContext = new DatabasePageViewModel(databaseService, listView);
-
+        BindingContext = new DatabasePageViewModel(databaseService);
     }
 
     private void OpenSelectedItem(object? sender, ItemTappedEventArgs e)
