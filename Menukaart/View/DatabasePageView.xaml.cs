@@ -15,9 +15,6 @@ public partial class DatabasePageView : ContentPage
         BindingContext = new DatabasePageViewModel(databaseService);
     }
 
-    private void OpenSelectedItem(object? sender, ItemTappedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
+ 
 
 }

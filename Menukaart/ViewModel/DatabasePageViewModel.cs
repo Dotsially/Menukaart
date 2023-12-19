@@ -54,7 +54,7 @@ namespace Menukaart.ViewModel
             {
                 // TODO: navigatie naar de nieuwe pagina
                 Debug.WriteLine($"clicked session {selectedSession.id}");
-                //Shell.Current.GoToAsync($"{nameof(SessionDetailPageView)}?id={selectedSession.id}");
+                Shell.Current.GoToAsync($"{nameof(SessionInfoPageView)}?id={selectedSession.id}");
             }
         }
 

@@ -89,6 +89,9 @@
 	  <Compile Update="View\MainPageView.xaml.cs">
 	    <DependentUpon>MainPageView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\SessionInfoPageView.xaml.cs">
+	    <DependentUpon>SessionInfoPageView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,6 +99,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\MainPageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\SessionInfoPageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\TutorialPageView.xaml">
