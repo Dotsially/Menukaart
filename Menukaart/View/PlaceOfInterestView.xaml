@@ -44,7 +44,8 @@
 
             <Button Style="{StaticResource PrimaryButton}" 
                     Margin="0, 20, 0, 0"
-                    Text="Return to Map"/>
+                    Text="Return to Map"
+                    Clicked="ReturnToMap"/>
         </VerticalStackLayout>
     </Grid>
     

@@ -78,6 +78,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\RoutePage.xaml.cs">
+	    <DependentUpon>RoutePage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\PlaceOfInterestView.xaml.cs">
 	    <DependentUpon>PlaceOfInterestView.xaml</DependentUpon>
 	  </Compile>
@@ -91,6 +94,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\MenuKaartStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\RoutePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\PlaceOfInterestView.xaml">

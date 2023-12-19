@@ -1,9 +1,8 @@
-using PolylineEncoder.Net.Utility;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using Menukaart.Model;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using Menukaart.Model;
 
 namespace Menukaart.View;
 
@@ -51,10 +50,15 @@ public partial class MapPage : ContentPage
 
     }
 
-    private async void ReturnToRoutes(object sender, EventArgs e)
+    private async void GoToPointOfInterest(object sender, EventArgs e)
     {
+        await Navigation.PushAsync(new PlaceOfInterestView());
+    }
 
+    private async void GoToRoutes(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new RoutePage());
     }
 
 
-    }
+}

@@ -9,6 +9,7 @@
     <StackLayout VerticalOptions="FillAndExpand">
         <maps:Map x:Name="map" MapType="Street" VerticalOptions="FillAndExpand" >
         </maps:Map>
-        <Button Text="Return to routes" Clicked="ReturnToRoutes"/>
+        <Button Text="Return to routes" Clicked="GoToRoutes"/>
+        <Button Text="Click on point of interest" Clicked="GoToPointOfInterest"/>
     </StackLayout>
 </ContentPage>
