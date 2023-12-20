@@ -58,12 +58,12 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\AGS_Logo.svg" />
-	  <None Remove="Resources\Images\ic_help.svg"/>
-	  <None Remove="Resources\Images\ic_restaurant.svg"/>
-	  <None Remove="Resources\Images\ic_route.svg"/>
+	  <None Remove="Resources\Images\ic_help.svg" />
+	  <None Remove="Resources\Images\ic_restaurant.svg" />
+	  <None Remove="Resources\Images\ic_route.svg" />
 	  <None Remove="Resources\Images\ic_route_list.svg" />
-	  <None Remove="Resources\Images\ic_session_statistics.svg"/>
-	  <None Remove="Resources\Images\VVV_Logo.svg"/>
+	  <None Remove="Resources\Images\ic_session_statistics.svg" />
+	  <None Remove="Resources\Images\VVV_Logo.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -77,6 +77,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\DatabasePageView.xaml.cs">
+	    <DependentUpon>DatabasePageView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\MainPageView.xaml.cs">
 	    <DependentUpon>MainPageView.xaml</DependentUpon>
 	  </Compile>
@@ -85,6 +88,9 @@
 	<ItemGroup>
 	  <Compile Update="View\MainPageView.xaml.cs">
 	    <DependentUpon>MainPageView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\SessionInfoPageView.xaml.cs">
+	    <DependentUpon>SessionInfoPageView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -95,10 +101,13 @@
 	  <MauiXaml Update="View\MainPageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\SessionInfoPageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\TutorialPageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\DatabasePage.xaml">
+	  <MauiXaml Update="View\DatabasePageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\MainPageView.xaml">

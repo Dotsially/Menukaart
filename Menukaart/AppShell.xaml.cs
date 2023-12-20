@@ -9,6 +9,8 @@ namespace Menukaart
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(TutorialPageView), typeof(TutorialPageView));
+            Routing.RegisterRoute(nameof(DatabasePageView), typeof(DatabasePageView));
+            Routing.RegisterRoute(nameof(SessionInfoPageView), typeof(SessionInfoPageView));
         }
     }
 }

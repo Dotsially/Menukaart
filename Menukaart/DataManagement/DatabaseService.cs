@@ -30,12 +30,12 @@ namespace Menukaart.DataManagement
         // Update de sessions in de database
         // UpdateSession(session)
 
-        public async Task<List<Session>> getSessions()
+        public async Task<List<Session>> GetSessions()
         {
             return await _connection.Table<Session>().ToListAsync();
         }
 
-        public async Task<Session> getBySessionId(int id)
+        public async Task<Session> GetBySessionId(int id)
         {
             return await _connection.Table<Session>().Where(session => session.id == id).FirstOrDefaultAsync();
         }

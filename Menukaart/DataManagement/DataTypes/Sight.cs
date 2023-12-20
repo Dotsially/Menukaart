@@ -11,29 +11,29 @@ namespace Menukaart.DataManagement.DataTypes
     public class Sight
     {
         //information about sight
-        public int id { get; }
-        public string name { get; }
-        public string description { get; }
-        public string extraInfoURL { get; }
-        public Image image { get; }
+        public int Id { get; }
+        public string Name { get; }
+        public string Description { get; }
+        public string ExtraInfoURL { get; }
+        public Image Image { get; }
 
         //variables for position
-        Location location { get; }
+        Location Location { get; }
 
         //status of sight
-        public bool visited { get; set; }
+        public bool Visited { get; set; }
         
         
 
         public Sight(int id, string name, string description, string extraInfoURL, Image image, Location location) 
         {
-            this.id = id;
-            this.name = name;
-            this.description = description;
-            this.extraInfoURL = extraInfoURL;
-            this.image = image;
-            this.location = location;
-            this.visited = false;
+            this.Id = id;
+            this.Name = name;
+            this.Description = description;
+            this.ExtraInfoURL = extraInfoURL;
+            this.Image = image;
+            this.Location = location;
+            this.Visited = false;
         }
        
     }
