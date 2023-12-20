@@ -2,8 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Menukaart.View.SessionInfoPageView"
-             Title="Session info page">
+             Title="Session info page"
+             xmlns:vm="clr-namespace:Menukaart.ViewModel">
     <VerticalStackLayout>
+        <ListView ItemsSource="{Binding Sights}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}" />
+                            <Label Text="{Binding Description}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Middle: TextBlock -->
+        <Label Text="{Binding Session.id}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+
         <Label 
             Text="Info about sessions"
             VerticalOptions="Center" 

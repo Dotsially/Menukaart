@@ -2,13 +2,8 @@
 using Menukaart.DataManagement;
 using Menukaart.DataManagement.DataTypes;
 using Menukaart.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Menukaart.ViewModel
 {
@@ -19,7 +14,7 @@ namespace Menukaart.ViewModel
         public DatabasePageViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
-            CreateMultipleEmptySessions(25);
+            CreateSession();
             LoadSessions();
         }
 
@@ -48,15 +43,22 @@ namespace Menukaart.ViewModel
             set => SetProperty(ref _selectedSession, value);
         }
 
-        private void OnItemSelected(Session selectedSession)
+        private async void OnItemSelected(Session selectedSession)
         {
             if (selectedSession != null)
             {
-                // TODO: navigatie naar de nieuwe pagina
+                var savedSights = await _databaseService.GetDatalinkFromSessionId(selectedSession.id);
+
+                var navigationParameter = new Dictionary<string, object>
+                    {
+                        { "SelectedSession", selectedSession },
+                        { "SavedSights", savedSights },
+                    };
                 Debug.WriteLine($"clicked session {selectedSession.id}");
-                Shell.Current.GoToAsync($"{nameof(SessionInfoPageView)}?id={selectedSession.id}");
+                await Shell.Current.GoToAsync(nameof(SessionInfoPageView), navigationParameter);
             }
         }
+
 
 
         //Test code

@@ -7,14 +7,9 @@ namespace Menukaart.View;
 
 public partial class DatabasePageView : ContentPage
 {
-    
-
 	public DatabasePageView(DatabaseService databaseService)
 	{
 		InitializeComponent();
         BindingContext = new DatabasePageViewModel(databaseService);
     }
-
- 
-
 }
