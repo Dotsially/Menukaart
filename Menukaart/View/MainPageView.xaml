@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Menukaart.View.MainPageView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:Menukaart.ViewModel"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    x:DataType="viewmodel:MainPageViewModel"
+    Shell.NavBarIsVisible="False">
+
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="LightContent"/>
+    </Page.Behaviors>
+
+    <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleText}" Text="Menu-Kaart" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
+
+            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Command="{Binding NavigateToTutorialCommand}"/>
+
+            <Image Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Source="vvv_logo.png" HeightRequest="150"/>
+
+        <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource BodyText}" 
+               Text="Introducing &quot;Menu-kaart&quot; – Your Culinary Gateway to Breda's Dutch Delights! Embark on a delectable journey through the heart of Breda with our innovative app,&quot;Menu-kaart.&quot; Designed to be your ultimate companion for exploring the rich tapestry of Dutch cuisine, Menu-kaart takes you on a curated tour of the city's finest restaurants, each offering a tantalizing array of authentic Dutch dishes. Discover the true flavors of Breda as you navigate through its charming streets, guided by a carefully crafted menu showcasing the region's culinary gems. Whether you're a local looking to revisit classic favorites or a visitor eager to savor the essence of Dutch gastronomy, Menu-kaart is your passport to an unforgettable dining experience!"/>
+
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Spacing="20" Margin="0, 20, 0, 0">
+
+                <Button Style="{StaticResource PrimaryButton}" Text="Start a Route"/>
+                <Button Style="{StaticResource PrimaryButton}" Text="Show passed session" Command="{Binding NavigateToSessionListCommand}"/>
+
+            </VerticalStackLayout>
+
+
+    </Grid>
+
+</ContentPage>

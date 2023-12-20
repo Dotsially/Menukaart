@@ -1,9 +1,19 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Menukaart.View;
+
 namespace Menukaart.ViewModel;
 
-public class MainPageViewModel
+public partial class MainPageViewModel : ObservableObject
 {
 	public MainPageViewModel()
 	{
-		
+
 	}
+
+    [RelayCommand]
+    Task NavigateToTutorial() => Shell.Current.GoToAsync(nameof(TutorialPageView));
+
+	[RelayCommand]
+	Task NavigateToSessionList() => Shell.Current.GoToAsync(nameof(DatabasePageView));
 }
