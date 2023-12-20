@@ -1,13 +1,10 @@
-using PolylineEncoder.Net.Utility;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
+using Menukaart.Model;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using Menukaart.Model;
+using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
-using PolylineEncoder.Net.Models;
 
 namespace Menukaart.View;
 
@@ -38,7 +35,7 @@ public partial class MapPageView : ContentPage
         StartListening();
 
         //List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
-        
+
         //foreach(var polylinePoint in polylinePoints)
         //{
 
@@ -79,8 +76,17 @@ public partial class MapPageView : ContentPage
     {
     }
 
+    private async Task addPinsToMap()
+    {
+        PointOfInterestList.poiList.ForEach(poi =>
+        {
+            var pin = new Pin() { Location = poi.Location, Label = poi.Name, Address = "" };
+            map.Pins.Add(pin);
+        });
+    }
+
     private async Task<List<Location>> GetRoutePolyline(Location userLocation, Location pointOfInterest)
-    { 
+    {
         using HttpClient client = new HttpClient();
 
 

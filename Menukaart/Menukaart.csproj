@@ -86,8 +86,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\PlaceOfInterestView.xaml.cs">
-	    <DependentUpon>PlaceOfInterestView.xaml</DependentUpon>
+	  <Compile Update="View\PointOfInterestView.xaml.cs">
+	    <DependentUpon>PointOfInterestView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\DatabasePageView.xaml.cs">
 	    <DependentUpon>DatabasePageView.xaml</DependentUpon>
@@ -110,7 +110,7 @@
 	  <MauiXaml Update="Resources\Styles\MenuKaartStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\PlaceOfInterestView.xaml">
+	  <MauiXaml Update="View\PointOfInterestView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\RouteListPageView.xaml">

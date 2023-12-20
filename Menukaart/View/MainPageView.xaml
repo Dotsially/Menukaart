@@ -38,9 +38,12 @@
         <VerticalStackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Spacing="20" Margin="0, 20, 0, 0">
 
             <Button Style="{StaticResource PrimaryButton}" Text="Start a Route" Command="{Binding NaviageToRouteListCommand}"/>
-                <Button Style="{StaticResource PrimaryButton}" Text="Show passed session" Command="{Binding NavigateToSessionListCommand}"/>
+            <Button Style="{StaticResource PrimaryButton}" Text="Show passed session" Command="{Binding NavigateToSessionListCommand}"/>
+            
+            <!-- remove later? -->
+            <Button Style="{StaticResource PrimaryButton}" Text="Show Map" Command="{Binding NavigateToMapCommand}"/>
 
-            </VerticalStackLayout>
+        </VerticalStackLayout>
 
 
     </Grid>
