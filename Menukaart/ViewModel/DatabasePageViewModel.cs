@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Menukaart.DataManagement;
 using Menukaart.DataManagement.DataTypes;
 using Menukaart.View;
@@ -7,14 +8,14 @@ using System.Diagnostics;
 
 namespace Menukaart.ViewModel
 {
-    public class DatabasePageViewModel : ObservableObject
+    public partial class DatabasePageViewModel : ObservableObject
     {
         private readonly DatabaseService _databaseService;
 
         public DatabasePageViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
-            CreateSession();
+            CreateMultipleEmptySessions(20);
             LoadSessions();
         }
 
@@ -43,21 +44,46 @@ namespace Menukaart.ViewModel
             set => SetProperty(ref _selectedSession, value);
         }
 
+        private bool _isProcessingSelection;
+
         private async void OnItemSelected(Session selectedSession)
         {
-            if (selectedSession != null)
+            if (_isProcessingSelection)
             {
-                var savedSights = await _databaseService.GetDatalinkFromSessionId(selectedSession.id);
+                return; // Ignore if the selection is already being processed
+            }
 
-                var navigationParameter = new Dictionary<string, object>
-                    {
-                        { "SelectedSession", selectedSession },
-                        { "SavedSights", savedSights },
-                    };
-                Debug.WriteLine($"clicked session {selectedSession.id}");
-                await Shell.Current.GoToAsync(nameof(SessionInfoPageView), navigationParameter);
+            try
+            {
+                _isProcessingSelection = true;
+
+                if (selectedSession != null)
+                {
+                    var savedSights = await _databaseService.GetDatalinkFromSessionId(selectedSession.id);
+
+                    var navigationParameter = new Dictionary<string, object>
+            {
+                { "SelectedSession", selectedSession },
+                { "SavedSights", savedSights },
+            };
+                    Debug.WriteLine($"clicked session {selectedSession.id}");
+                    await Shell.Current.GoToAsync(nameof(SessionInfoPageView), navigationParameter);
+
+                    // Clear the selection after navigation
+                    SelectedSession = null;
+                }
+            }
+            finally
+            {
+                _isProcessingSelection = false;
             }
         }
+
+        [RelayCommand]
+        Task NavigateToTutorial() => Shell.Current.GoToAsync(nameof(TutorialPageView));
+
+        [RelayCommand]
+        Task Back() => Shell.Current.GoToAsync("..");
 
 
 
