@@ -17,6 +17,8 @@ namespace Menukaart.DataManagement
         public DatabaseService()
         {
             _connection = new SQLiteAsyncConnection(Constants.DatabasePath);
+            _connection.DropTableAsync<Session>();
+            _connection.DropTableAsync<Datalink>();
             _connection.CreateTablesAsync<Session, Datalink>();
             WipeAll();
         }
