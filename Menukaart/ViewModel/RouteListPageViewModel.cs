@@ -8,6 +8,12 @@ namespace Menukaart.ViewModel
 {
     public partial class RouteListPageViewModel : ObservableObject
     {
+
+
+        private Command<RouteListPageModel> _itemSelectedCommand;
+        public Command<RouteListPageModel> ItemSelectedCommand =>
+            _itemSelectedCommand ?? (_itemSelectedCommand = new Command<RouteListPageModel>(OnItemSelected));
+
         [ObservableProperty]
         private ObservableCollection<RouteListPageModel> _routes = new ObservableCollection<RouteListPageModel>();
 
@@ -42,7 +48,17 @@ namespace Menukaart.ViewModel
             });
         }
 
-        [RelayCommand]
+        private async void OnItemSelected(RouteListPageModel selectedRoute)
+        {
+            var navigationParameter = new Dictionary<string, object>
+            {
+                { "SelectedSession", selectedRoute },
+                { "SavedSights", Routes.IndexOf(selectedRoute)},
+            };
+            await Shell.Current.GoToAsync(nameof(RouteListPageModel), navigationParameter);
+        }
+
+            [RelayCommand]
         Task NavigateToTutorial() => Shell.Current.GoToAsync(nameof(TutorialPageView));
 
         [RelayCommand]

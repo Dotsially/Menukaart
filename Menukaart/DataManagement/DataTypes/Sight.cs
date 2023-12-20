@@ -18,7 +18,7 @@ namespace Menukaart.DataManagement.DataTypes
         public Image Image { get; }
 
         //variables for position
-        Location Location { get; }
+        public Location Location { get; }
 
         //status of sight
         public bool Visited { get; set; }

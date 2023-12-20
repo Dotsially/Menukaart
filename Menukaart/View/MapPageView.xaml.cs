@@ -3,11 +3,11 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using Menukaart.Model;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
 using PolylineEncoder.Net.Models;
+using Menukaart.DataManagement.Menukaart.Model;
 
 namespace Menukaart.View;
 
@@ -16,20 +16,19 @@ public partial class MapPageView : ContentPage
     private readonly IGeolocation geolocation;
     Location pointOfInterest;
     MapSpan userLocation;
-    PointOfInterestList poiList;
+    SightData poiList;
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
 
     public MapPageView(IGeolocation geolocation)
     {
         this.geolocation = geolocation;
         poiList = new();
-        poiList.InitializeList();
         InitializeComponent();
 
         Polyline testPolyline = new Polyline();
 
         userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
-        var poi = PointOfInterestList.poiList.First();
+        var poi = SightData.SightList.First();
 
         pointOfInterest = poi.Location;
         map.IsShowingUser = true;
