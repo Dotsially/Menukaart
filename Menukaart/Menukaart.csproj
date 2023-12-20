@@ -59,6 +59,11 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\lovendijkstraat-avans.jpg" />
 	  <None Remove="Resources\Images\AGS_Logo.svg" />
+	  <None Remove="Resources\Images\ic_help.svg" />
+	  <None Remove="Resources\Images\ic_restaurant.svg" />
+	  <None Remove="Resources\Images\ic_route.svg" />
+	  <None Remove="Resources\Images\ic_route_list.svg" />
+	  <None Remove="Resources\Images\ic_session_statistics.svg" />
 	  <None Remove="Resources\Images\VVV_Logo.svg" />
 	</ItemGroup>
 
@@ -71,6 +76,8 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.7" />
 	    <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.3" />
@@ -83,6 +90,11 @@
 	  </Compile>
 	  <Compile Update="View\MapPageView.xaml.cs">
 	    <DependentUpon>MapPageView.xaml</DependentUpon>
+	  <Compile Update="View\DatabasePageView.xaml.cs">
+	    <DependentUpon>DatabasePageView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\MainPageView.xaml.cs">
+	    <DependentUpon>MainPageView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -90,10 +102,31 @@
 	  <MauiXaml Update="View\MapPageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <Compile Update="View\MainPageView.xaml.cs">
+	    <DependentUpon>MainPageView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\SessionInfoPageView.xaml.cs">
+	    <DependentUpon>SessionInfoPageView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Resources\Styles\MenuKaartStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\PlaceOfInterestView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\SessionInfoPageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\TutorialPageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\DatabasePageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\MainPageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

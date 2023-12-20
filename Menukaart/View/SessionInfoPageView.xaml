@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Menukaart.View.SessionInfoPageView"
+             xmlns:vm="clr-namespace:Menukaart.ViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Style="{StaticResource TitleText}" Text="{Binding Session.id, StringFormat='Session {0}'}" HorizontalOptions="Center"/>
+        
+        <Border Grid.Row="1" Stroke="Black" StrokeThickness="3" Margin="10" StrokeShape="RoundRectangle 10" >
+            <CollectionView ItemsSource="{Binding Sights}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="Black" StrokeThickness="2" StrokeShape="RoundRectangle 10" Margin="5" MinimumHeightRequest="50">
+                            <VerticalStackLayout Margin="5">
+                                <Label Text="{Binding Name}" Style="{StaticResource ListText}" />
+                                <Label Text="{Binding Description}" Style="{StaticResource ListText}"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Border>
+
+        <!-- Middle: TextBlock -->
+        <VerticalStackLayout Grid.Row="2" Margin="10">
+            <Label Text="Other Statistics:" Style="{StaticResource Headline}"/>
+            <Border Stroke="Black" StrokeThickness="3" Grid.Row="1" StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout MinimumHeightRequest="100" Margin="5">
+                    <Label Text="Total distance:" HorizontalOptions="Center" Style="{StaticResource SubHeadline}"/>
+                    <Label Text="{Binding Session.distance}" HorizontalOptions="Center" Margin="0,0,0,10" Style="{StaticResource BodyText}" />
+                    <Label Text="Total spend time" HorizontalOptions="Center" Style="{StaticResource SubHeadline}"/>
+                    <Label  Text="{Binding Session.time}" HorizontalOptions="Center" Style="{StaticResource BodyText}"  />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+            
+    
+        <Button Text="Back" Command="{Binding BackCommand}" Grid.Row="3" Margin="10" MaximumHeightRequest="70" VerticalOptions="End"/>
+    </Grid>
+</ContentPage>
