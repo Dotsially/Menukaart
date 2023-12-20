@@ -37,15 +37,15 @@ public partial class MapPageView : ContentPage
 
         StartListening();
 
-        List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
+        //List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
         
-        foreach(var polylinePoint in polylinePoints)
-        {
+        //foreach(var polylinePoint in polylinePoints)
+        //{
 
-            testPolyline.Add(polylinePoint);
-        }
+        //testPolyline.Add(polylinePoint);
+        //}
 
-        map.AddLogicalChild(testPolyline);
+        //map.AddLogicalChild(testPolyline);
     }
 
     //Start listening to user location
