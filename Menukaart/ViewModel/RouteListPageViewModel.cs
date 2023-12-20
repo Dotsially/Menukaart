@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Menukaart.Model;
+using Menukaart.View;
 using System.Collections.ObjectModel;
 
 namespace Menukaart.ViewModel
@@ -39,5 +41,11 @@ namespace Menukaart.ViewModel
                 ImageName = "temp.jpg"
             });
         }
+
+        [RelayCommand]
+        Task NavigateToTutorial() => Shell.Current.GoToAsync(nameof(TutorialPageView));
+
+        [RelayCommand]
+        Task NavigateToMainMenu() => Shell.Current.GoToAsync(nameof(MainPageView));
     }
 }

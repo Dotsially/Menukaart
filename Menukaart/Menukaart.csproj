@@ -64,6 +64,7 @@
 	  <None Remove="Resources\Images\ic_route.svg" />
 	  <None Remove="Resources\Images\ic_route_list.svg" />
 	  <None Remove="Resources\Images\ic_session_statistics.svg" />
+	  <None Remove="Resources\Images\temp.jpg" />
 	  <None Remove="Resources\Images\VVV_Logo.svg" />
 	</ItemGroup>
 
