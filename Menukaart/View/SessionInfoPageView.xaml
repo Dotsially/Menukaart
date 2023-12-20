@@ -21,7 +21,7 @@
                     <DataTemplate>
                         <Border Stroke="Black" StrokeThickness="2" StrokeShape="RoundRectangle 10" Margin="5" MinimumHeightRequest="50">
                             <VerticalStackLayout Margin="5">
-                                <Label Text="{Binding Name}" Style="{StaticResource ListText}" />
+                                <Label Text="{Binding Name}" Style="{StaticResource SubHeadline}" />
                                 <Label Text="{Binding Description}" Style="{StaticResource ListText}"/>
                             </VerticalStackLayout>
                         </Border>
