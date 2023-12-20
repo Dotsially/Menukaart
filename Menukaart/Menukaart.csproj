@@ -112,6 +112,9 @@
 	  <MauiXaml Update="View\PlaceOfInterestView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\RouteListPageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\SessionInfoPageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

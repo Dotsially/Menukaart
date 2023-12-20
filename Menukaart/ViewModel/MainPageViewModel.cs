@@ -16,4 +16,7 @@ public partial class MainPageViewModel : ObservableObject
 
 	[RelayCommand]
 	Task NavigateToSessionList() => Shell.Current.GoToAsync(nameof(DatabasePageView));
+
+    [RelayCommand]
+    Task NaviageToRouteList() => Shell.Current.GoToAsync(nameof(RouteListPageView));
 }
