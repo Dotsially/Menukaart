@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/.idea/.idea.Menukaart/.idea
+/Menukaart/.idea/.idea.Menukaart.dir/.idea
