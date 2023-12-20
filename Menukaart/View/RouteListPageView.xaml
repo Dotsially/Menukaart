@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Menukaart.ViewModel"
+             xmlns:m="clr-namespace:Menukaart.Model"
              x:Class="Menukaart.View.RouteListPageView"
              x:DataType="vm:RouteListPageViewModel"
              Shell.NavBarIsVisible="False">
@@ -21,6 +22,30 @@
         <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleText}" Text="Select a Route" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
 
         <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Command="{Binding NavigateToTutorialCommand}"/>
+
+        <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <ListView ItemsSource="{Binding Routes}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="m:RouteListPageModel">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="{Binding ImageName}"/>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="10">
+                                <Label Style="{StaticResource BodyText}" Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Style="{StaticResource BodyText}" Text="{Binding Description}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
+            
+        </ScrollView>
 
         <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PrimaryButton}" Text="Back to main menu" VerticalOptions="Center" Command="{Binding NavigateToMainMenuCommand}"/>
 
