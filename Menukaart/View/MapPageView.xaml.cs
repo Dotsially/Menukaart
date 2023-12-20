@@ -4,7 +4,7 @@ using Microsoft.Maui.Maps;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
-using PolylineEncoder.Net.Models;
+using PolylineEncoder.Net.Utility;
 using Menukaart.DataManagement.Menukaart.Model;
 
 namespace Menukaart.View;
@@ -78,7 +78,7 @@ public partial class MapPageView : ContentPage
 
     private async Task addPinsToMap()
     {
-        PointOfInterestList.poiList.ForEach(poi =>
+        SightData.SightList.ForEach(poi =>
         {
             var pin = new Pin() { Location = poi.Location, Label = poi.Name, Address = "" };
             map.Pins.Add(pin);
