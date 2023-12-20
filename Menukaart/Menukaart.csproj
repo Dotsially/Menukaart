@@ -88,8 +88,6 @@
 	  <Compile Update="View\PlaceOfInterestView.xaml.cs">
 	    <DependentUpon>PlaceOfInterestView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\MapPageView.xaml.cs">
-	    <DependentUpon>MapPageView.xaml</DependentUpon>
 	  <Compile Update="View\DatabasePageView.xaml.cs">
 	    <DependentUpon>DatabasePageView.xaml</DependentUpon>
 	  </Compile>
