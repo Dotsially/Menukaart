@@ -11,7 +11,7 @@ using PolylineEncoder.Net.Models;
 
 namespace Menukaart.View;
 
-public partial class MapPage : ContentPage
+public partial class MapPageView : ContentPage
 {
     private readonly IGeolocation geolocation;
     Location pointOfInterest;
@@ -19,7 +19,7 @@ public partial class MapPage : ContentPage
     PointOfInterestList poiList;
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
 
-    public MapPage(IGeolocation geolocation)
+    public MapPageView(IGeolocation geolocation)
     {
         this.geolocation = geolocation;
         poiList = new();

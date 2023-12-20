@@ -9,7 +9,7 @@
 
     <ShellContent
         Title="MapPage"
-        ContentTemplate="{DataTemplate local:MapPage}"
+        ContentTemplate="{DataTemplate local:MapPageViewc}"
         Route="MapPage" />
     
 

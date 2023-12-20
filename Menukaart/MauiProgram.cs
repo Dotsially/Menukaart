@@ -31,7 +31,7 @@ namespace Menukaart
             builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
-            builder.Services.AddTransient<MapPage>();
+            builder.Services.AddTransient<MapPageView>();
             return builder.Build();
         }
     }

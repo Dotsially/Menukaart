@@ -94,21 +94,18 @@
 	  <Compile Update="View\MainPageView.xaml.cs">
 	    <DependentUpon>MainPageView.xaml</DependentUpon>
 	  </Compile>
+		<Compile Update="View\MapPageView.xaml.cs">
+			<DependentUpon>MapPageView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="View\SessionInfoPageView.xaml.cs">
+			<DependentUpon>SessionInfoPageView.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\MapPageView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <Compile Update="View\MainPageView.xaml.cs">
-	    <DependentUpon>MainPageView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="View\SessionInfoPageView.xaml.cs">
-	    <DependentUpon>SessionInfoPageView.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
+	<MauiXaml Update="View\MapPageView.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	</MauiXaml>
 	  <MauiXaml Update="Resources\Styles\MenuKaartStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
