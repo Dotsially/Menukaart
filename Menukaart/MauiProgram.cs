@@ -2,6 +2,7 @@
 ﻿using Menukaart.DataManagement;
 using Menukaart.DataManagement.Menukaart.Model;
 using Menukaart.View;
+using Menukaart.ViewModel;
 using Microsoft.Extensions.Logging;
 
 namespace Menukaart
@@ -25,6 +26,7 @@ namespace Menukaart
 
             builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddTransient<DatabasePageView>();
+            builder.Services.AddTransient<RouteListPageViewModel>();
 
 
 #if DEBUG

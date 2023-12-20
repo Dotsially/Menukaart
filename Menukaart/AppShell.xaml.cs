@@ -11,6 +11,8 @@ namespace Menukaart
             Routing.RegisterRoute(nameof(TutorialPageView), typeof(TutorialPageView));
             Routing.RegisterRoute(nameof(DatabasePageView), typeof(DatabasePageView));
             Routing.RegisterRoute(nameof(SessionInfoPageView), typeof(SessionInfoPageView));
+            Routing.RegisterRoute(nameof(RouteListPageView), typeof(RouteListPageView));
+            Routing.RegisterRoute(nameof(MainPageView), typeof(MainPageView));
         }
     }
 }
