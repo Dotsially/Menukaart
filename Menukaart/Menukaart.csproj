@@ -98,4 +98,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMenukaartHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
 </Project>
