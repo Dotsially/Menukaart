@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Menukaart.DataManagement;
 using Menukaart.DataManagement.DataTypes;
 using Menukaart.DataManagement.Menukaart.Model;
+using Menukaart.View;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,6 +45,9 @@ namespace Menukaart.ViewModel
 
             Sights = new ObservableCollection<Sight>(visitedSights);
         }
+
+        [RelayCommand]
+        Task NavigateToTutorial() => Shell.Current.GoToAsync(nameof(TutorialPageView));
 
         [RelayCommand]
         Task Back() => Shell.Current.GoToAsync("..");
