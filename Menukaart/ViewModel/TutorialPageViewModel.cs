@@ -50,6 +50,5 @@ namespace Menukaart.ViewModel
 
         [RelayCommand]
         Task Back() => Shell.Current.GoToAsync("..");
-
     }
 }
