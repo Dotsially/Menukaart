@@ -4,11 +4,27 @@
              xmlns:vm="clr-namespace:Menukaart.ViewModel"
              x:Class="Menukaart.View.RouteListPageView"
              x:DataType="vm:RouteListPageViewModel"
-             Title="RouteListPageView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Shell.NavBarIsVisible="False">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleText}" Text="Select a Route" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
+
+        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Command="{Binding NavigateToTutorialCommand}"/>
+
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PrimaryButton}" Text="Back to main menu" VerticalOptions="Center" Command="{Binding NavigateToMainMenuCommand}"/>
+
+
+    </Grid>
+    
 </ContentPage>
