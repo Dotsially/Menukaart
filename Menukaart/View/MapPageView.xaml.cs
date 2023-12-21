@@ -13,14 +13,9 @@ namespace Menukaart.View;
 [QueryProperty(nameof(Route), "route")]
 public partial class MapPageView : ContentPage
 {
-    public RouteListPageModel Route {
-        get; set;
-    }
-
     private readonly IGeolocation geolocation;
     Location pointOfInterest;
     MapSpan userLocation;
-    RouteListPageModel route;
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
 
     public MapPageView(IGeolocation geolocation)
@@ -67,6 +62,7 @@ public partial class MapPageView : ContentPage
 
     void ArrivedAtLocation()
     {
+    }
 
     private async void Pin_MarkerClicked(object sender, EventArgs e)
     {
