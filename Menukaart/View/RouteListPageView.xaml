@@ -25,9 +25,9 @@
         <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <CollectionView ItemsSource="{Binding Routes}"
                             SelectionMode="Single"
-                            SelectedItem="{Binding SelectedSession}"
+                            SelectedItem="{Binding SelectedRoute}"
                             SelectionChangedCommand="{Binding ItemSelectedCommand}"
-                            SelectionChangedCommandParameter="{Binding SelectedSession}">
+                            SelectionChangedCommandParameter="{Binding SelectedRoute}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>

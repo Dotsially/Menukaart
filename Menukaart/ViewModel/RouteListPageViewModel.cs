@@ -20,6 +20,11 @@ namespace Menukaart.ViewModel
         [ObservableProperty]
         private ObservableCollection<RouteListPageModel> _routes = new ObservableCollection<RouteListPageModel>();
 
+        private RouteListPageModel _selectedRoute;
+        public RouteListPageModel SelectedRoute {
+            get => _selectedRoute;
+            set => SetProperty(ref _selectedRoute, value); }
+
         public RouteListPageViewModel()
         {
             SightData sights = new();
@@ -61,7 +66,15 @@ namespace Menukaart.ViewModel
 
         private async void OnItemSelected(RouteListPageModel selectedRoute)
         {
-            await Shell.Current.GoToAsync($"MapPageView?route={selectedRoute}");
+            if(selectedRoute == null)
+            {
+                Debug.WriteLine("ROUTE IS NULL");
+            }
+            else
+            {
+                Debug.WriteLine($"{selectedRoute.Name} is selected");
+            }
+                await Shell.Current.GoToAsync($"MapPageView?route={selectedRoute}");
         }
 
         [RelayCommand]
