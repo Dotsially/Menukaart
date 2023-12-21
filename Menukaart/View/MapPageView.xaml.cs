@@ -1,11 +1,12 @@
-using Menukaart.Model;
+using Menukaart.DataManagement.DataTypes;
+using Menukaart.DataManagement.Menukaart.Model;
+using Menukaart.ViewModel;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
-using PolylineEncoder.Net.Utility;
-using Menukaart.DataManagement.Menukaart.Model;
 
 namespace Menukaart.View;
 
@@ -26,12 +27,13 @@ public partial class MapPageView : ContentPage
         Polyline testPolyline = new Polyline();
 
         userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
-        var poi = SightData.SightList.First();
+        var sight = SightData.SightList.Last();
 
-        pointOfInterest = poi.Location;
+        pointOfInterest = sight.Location;
         map.IsShowingUser = true;
-        map.Pins.Add(new Pin() { Location = poi.Location, Label = poi.Name, Address = "" });
-
+        Pin pin = new Pin() { Location = sight.Location, Label = sight.Name, Address = "" };
+        pin.MarkerClicked += Pin_MarkerClicked;
+        map.Pins.Add(pin);
         StartListening();
 
         //List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
@@ -76,15 +78,22 @@ public partial class MapPageView : ContentPage
     {
     }
 
-    private async Task addPinsToMap()
+    private async void Pin_MarkerClicked(object sender, EventArgs e)
     {
-        SightData.SightList.ForEach(poi =>
-        {
-            var pin = new Pin() { Location = poi.Location, Label = poi.Name, Address = "" };
-            map.Pins.Add(pin);
-        });
+        // This method will be called when a pin is clicked
+        var pin = (Pin)sender;
+        Console.WriteLine($"Pin {pin.Label} was clicked");
+
+        Sight selectedSight = SightData.SightList.SingleOrDefault(sight => sight.Name == pin.Label.ToString());
+
+        await GoToSightView(selectedSight);
+
     }
 
+    private async Task GoToSightView(Sight sight)
+    {
+        await Navigation.PushAsync(new SightView(new MapPageViewModel(sight, Navigation))); // dont forget to add navigation to viewmodel
+    }
     private async Task<List<Location>> GetRoutePolyline(Location userLocation, Location pointOfInterest)
     {
         using HttpClient client = new HttpClient();

@@ -1,18 +1,23 @@
-﻿using Menukaart.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Menukaart.DataManagement.DataTypes;
 
 namespace Menukaart.ViewModel
 {
-    public class MapPageViewModel
+    public partial class MapPageViewModel : ObservableObject
     {
-       public MapPageViewModel()
-       {
+        [ObservableProperty]
+        private Sight _currentSight;
 
-       }
+        private INavigation _navigation;
+        public MapPageViewModel(Sight sight, INavigation navigation)
+        {
+            _currentSight = sight;
+            _navigation = navigation;
+        }
+
+        [RelayCommand]
+        async Task NavigateToPreviousView() => await _navigation.PopAsync();
     }
 
-    }
+}
