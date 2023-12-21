@@ -1,11 +1,12 @@
-using Menukaart.Model;
+using Menukaart.DataManagement.DataTypes;
+using Menukaart.DataManagement.Menukaart.Model;
+using Menukaart.ViewModel;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
-using PolylineEncoder.Net.Utility;
-using Menukaart.DataManagement.Menukaart.Model;
 
 namespace Menukaart.View;
 
@@ -67,8 +68,22 @@ public partial class MapPageView : ContentPage
     void ArrivedAtLocation()
     {
 
-    }    
+    private async void Pin_MarkerClicked(object sender, EventArgs e)
+    {
+        // This method will be called when a pin is clicked
+        var pin = (Pin)sender;
+        Console.WriteLine($"Pin {pin.Label} was clicked");
 
+        Sight selectedSight = SightData.SightList.SingleOrDefault(sight => sight.Name == pin.Label.ToString());
+
+        await GoToSightView(selectedSight);
+
+    }
+
+    private async Task GoToSightView(Sight sight)
+    {
+        await Navigation.PushAsync(new SightView(new MapPageViewModel(sight, Navigation))); // dont forget to add navigation to viewmodel
+    }
     private async Task<List<Location>> GetRoutePolyline(Location userLocation, Location pointOfInterest)
     {
         using HttpClient client = new HttpClient();
