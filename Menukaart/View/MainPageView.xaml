@@ -40,8 +40,6 @@
             <Button Style="{StaticResource PrimaryButton}" Text="Start a Route" Command="{Binding NaviageToRouteListCommand}"/>
             <Button Style="{StaticResource PrimaryButton}" Text="Show passed session" Command="{Binding NavigateToSessionListCommand}"/>
             
-            <!-- remove later? -->
-            <Button Style="{StaticResource PrimaryButton}" Text="Show Map" Command="{Binding NavigateToMapCommand}"/>
 
         </VerticalStackLayout>
 

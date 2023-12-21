@@ -66,15 +66,11 @@ namespace Menukaart.ViewModel
 
         private async void OnItemSelected(RouteListPageModel selectedRoute)
         {
-            if(selectedRoute == null)
+            var navigationParameter = new Dictionary<string, object>
             {
-                Debug.WriteLine("ROUTE IS NULL");
-            }
-            else
-            {
-                Debug.WriteLine($"{selectedRoute.Name} is selected");
-            }
-                await Shell.Current.GoToAsync($"MapPageView?route={selectedRoute}");
+                { "route", selectedRoute }
+            };
+            await Shell.Current.GoToAsync($"MapPageView", navigationParameter);
         }
 
         [RelayCommand]

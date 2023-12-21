@@ -7,23 +7,37 @@ using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Net.NetworkInformation;
+using Menukaart.Model;
 using System.Text.Json.Nodes;
-
+using System.Net;
 namespace Menukaart.View;
 
-//[QueryProperty(nameof(Route), "route")]
+[QueryProperty(nameof(Route), "route")]
 public partial class MapPageView : ContentPage
 {
     private readonly IGeolocation geolocation;
     Location pointOfInterest;
     MapSpan userLocation;
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
+    double distance = 0;
+    Session session;
+
+    private RouteListPageModel _route;
+    public RouteListPageModel Route
+    {
+        get => _route;
+        set
+        {
+            _route = value;
+            OnPropertyChanged();
+        }
+    }
+    int routeEnumerator = 0;
 
     public MapPageView(IGeolocation geolocation)
     {
         this.geolocation = geolocation;
         InitializeComponent();
-        Initialize();
 
         //List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
 
@@ -49,10 +63,23 @@ public partial class MapPageView : ContentPage
     {
         Location location = new Location(e.Location.Latitude, e.Location.Longitude);
 
-        double distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
+        double oldDistance = distance;
+        distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
         Debug.WriteLine(distance);
 
-        if(distance <= 0.01)
+        if(oldDistance == 0)
+        {
+
+        }
+        else
+        {
+            double distanceWalked = oldDistance * 1000.0 - distance * 1000.0;
+            session.distance = (int)distanceWalked;
+        }
+
+        
+
+        if(distance <= 0.02)
         {
             ArrivedAtLocation();
         }
@@ -63,6 +90,22 @@ public partial class MapPageView : ContentPage
 
     void ArrivedAtLocation()
     {
+        session.AddSight(Route.SightList[routeEnumerator].Id);
+        if (routeEnumerator < Route.SightList.Count)
+        {
+            routeEnumerator++;
+        }
+        else
+        {
+            routeEnumerator = 0;
+        }
+
+        map.Pins.Clear();
+        var newPoi = Route.SightList[routeEnumerator];
+        map.Pins.Add(new Pin{
+            Location = newPoi.Location,
+            Label = newPoi.Name,
+            Address = ""});
     }
 
     private async void Pin_MarkerClicked(object sender, EventArgs e)
@@ -109,14 +152,12 @@ public partial class MapPageView : ContentPage
     }
 
 
-    private void Initialize()
+    private void Initialize(RouteListPageModel route)
     { 
-
-
         Polyline testPolyline = new Polyline();
-            
+        session = new Session();
         userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
-        var poi = SightData.SightList.First();
+        var poi = route.SightList[0];
         pointOfInterest = poi.Location;
         
         map.IsShowingUser = true;
@@ -133,8 +174,11 @@ public partial class MapPageView : ContentPage
         StartListening();
     }
 
-    private void OnAppearing()
+    protected override void OnAppearing()
     {
-        //Debug.WriteLine(Route.SightList.First().Name);
+        base.OnAppearing();
+        Initialize(Route);
+
+        
     }
 }
