@@ -6,11 +6,12 @@ using Microsoft.Maui.Maps;
 using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
+using System.Net.NetworkInformation;
 using System.Text.Json.Nodes;
 
 namespace Menukaart.View;
 
-[QueryProperty(nameof(Route), "route")]
+//[QueryProperty(nameof(Route), "route")]
 public partial class MapPageView : ContentPage
 {
     private readonly IGeolocation geolocation;
@@ -113,12 +114,21 @@ public partial class MapPageView : ContentPage
 
 
         Polyline testPolyline = new Polyline();
-
+            
         userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
         var poi = SightData.SightList.First();
         pointOfInterest = poi.Location;
+        
         map.IsShowingUser = true;
-        map.Pins.Add(new Pin() { Location = poi.Location, Label = poi.Name, Address = "" });
+        
+        Pin pin = new Pin()
+        {
+            Location = poi.Location,
+            Label = poi.Name,
+            Address = ""
+        };
+        pin.MarkerClicked += Pin_MarkerClicked;
+        map.Pins.Add(pin);
 
         StartListening();
     }
