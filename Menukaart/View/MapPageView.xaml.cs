@@ -1,90 +1,129 @@
-using Menukaart.Model;
+using Menukaart.DataManagement.DataTypes;
+using Menukaart.DataManagement.Menukaart.Model;
+using Menukaart.ViewModel;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
+using System.Net.NetworkInformation;
+using Menukaart.Model;
 using System.Text.Json.Nodes;
-using PolylineEncoder.Net.Utility;
-using Menukaart.DataManagement.Menukaart.Model;
-
+using System.Net;
 namespace Menukaart.View;
 
+[QueryProperty(nameof(Route), "route")]
 public partial class MapPageView : ContentPage
 {
     private readonly IGeolocation geolocation;
     Location pointOfInterest;
     MapSpan userLocation;
-    SightData poiList;
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
+    double distance = 0;
+    Session session;
+
+    private RouteListPageModel _route;
+    public RouteListPageModel Route
+    {
+        get => _route;
+        set
+        {
+            _route = value;
+            OnPropertyChanged();
+        }
+    }
+    int routeEnumerator = 0;
 
     public MapPageView(IGeolocation geolocation)
     {
         this.geolocation = geolocation;
-        poiList = new();
         InitializeComponent();
-
-        Polyline testPolyline = new Polyline();
-
-        userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
-        var poi = SightData.SightList.First();
-
-        pointOfInterest = poi.Location;
-        map.IsShowingUser = true;
-        map.Pins.Add(new Pin() { Location = poi.Location, Label = poi.Name, Address = "" });
-
-        StartListening();
 
         //List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
 
         //foreach(var polylinePoint in polylinePoints)
         //{
-
-        //testPolyline.Add(polylinePoint);
+        //    testPolyline.Add(polylinePoint);
         //}
 
         //map.AddLogicalChild(testPolyline);
     }
 
     //Start listening to user location
-    private async Task<bool> StartListening()
+    private async void StartListening()
     {
-        GeolocationAccuracy accuracy = GeolocationAccuracy.High;
+        GeolocationAccuracy accuracy = GeolocationAccuracy.Best;
         var request = new GeolocationListeningRequest(accuracy);
 
-        geolocation.LocationChanged += GeolocationLocationChanged;
+        geolocation.LocationChanged += GeolocationChanged;
         var success = await Geolocation.StartListeningForegroundAsync(request);
-        return success;
     }
 
-    void GeolocationLocationChanged(object sender, GeolocationLocationChangedEventArgs e)
+    void GeolocationChanged(object sender, GeolocationLocationChangedEventArgs e)
     {
         Location location = new Location(e.Location.Latitude, e.Location.Longitude);
 
-        double distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
+        double oldDistance = distance;
+        distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
         Debug.WriteLine(distance);
-        if (distance <= 0.01)
+
+        if(oldDistance == 0)
         {
-            Debug.WriteLine("you arrived");
 
         }
+        else
+        {
+            double distanceWalked = oldDistance * 1000.0 - distance * 1000.0;
+            session.distance = (int)distanceWalked;
+        }
 
+        
+
+        if(distance <= 0.02)
+        {
+            ArrivedAtLocation();
+        }
+      
         userLocation = new MapSpan(location, 0.01, 0.01);
         map.MoveToRegion(userLocation);
     }
 
-    private async void ReturnToRoutes(object sender, EventArgs e)
+    void ArrivedAtLocation()
     {
-    }
-
-    private async Task addPinsToMap()
-    {
-        SightData.SightList.ForEach(poi =>
+        session.AddSight(Route.SightList[routeEnumerator].Id);
+        if (routeEnumerator < Route.SightList.Count)
         {
-            var pin = new Pin() { Location = poi.Location, Label = poi.Name, Address = "" };
-            map.Pins.Add(pin);
-        });
+            routeEnumerator++;
+        }
+        else
+        {
+            routeEnumerator = 0;
+        }
+
+        map.Pins.Clear();
+        var newPoi = Route.SightList[routeEnumerator];
+        map.Pins.Add(new Pin{
+            Location = newPoi.Location,
+            Label = newPoi.Name,
+            Address = ""});
     }
 
+    private async void Pin_MarkerClicked(object sender, EventArgs e)
+    {
+        // This method will be called when a pin is clicked
+        var pin = (Pin)sender;
+        Console.WriteLine($"Pin {pin.Label} was clicked");
+
+        Sight selectedSight = SightData.SightList.SingleOrDefault(sight => sight.Name == pin.Label.ToString());
+
+        await GoToSightView(selectedSight);
+
+    }
+
+    private async Task GoToSightView(Sight sight)
+    {
+        await Navigation.PushAsync(new SightView(new MapPageViewModel(sight, Navigation))); // dont forget to add navigation to viewmodel
+    }
     private async Task<List<Location>> GetRoutePolyline(Location userLocation, Location pointOfInterest)
     {
         using HttpClient client = new HttpClient();
@@ -113,4 +152,33 @@ public partial class MapPageView : ContentPage
     }
 
 
+    private void Initialize(RouteListPageModel route)
+    { 
+        Polyline testPolyline = new Polyline();
+        session = new Session();
+        userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
+        var poi = route.SightList[0];
+        pointOfInterest = poi.Location;
+        
+        map.IsShowingUser = true;
+        
+        Pin pin = new Pin()
+        {
+            Location = poi.Location,
+            Label = poi.Name,
+            Address = ""
+        };
+        pin.MarkerClicked += Pin_MarkerClicked;
+        map.Pins.Add(pin);
+
+        StartListening();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        Initialize(Route);
+
+        
+    }
 }

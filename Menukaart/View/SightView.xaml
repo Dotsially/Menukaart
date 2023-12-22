@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Menukaart.View.PointOfInterestView"
+             x:Class="Menukaart.View.SightView"
              xmlns:viewmodel="clr-namespace:Menukaart.ViewModel"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              Shell.NavBarIsVisible="False">
@@ -17,11 +17,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Spacing="10" Padding="10" Margin="0, 20, 0, 0">
+        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Spacing="10" Padding="10" Margin="0, 20, 0, 0" x:DataType="viewmodel:MapPageViewModel">
 
             <!-- Header for the landmark -->
             <Label x:Name="LandmarkLabel"
-            Text="Bezienswaardigheid"
+            Text="{Binding CurrentSight.Name}"
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalOptions="Center" 
@@ -32,7 +32,7 @@
             HorizontalOptions="Center" 
             VerticalOptions="Start"
             Margin="0, 20, 0, 0"
-            Source="lovensdijkstraat_avans.jpeg"/>
+            Source="{Binding CurrentSight.Image.Source}"/>
 
 
             <!-- Text information placeholder -->
@@ -40,11 +40,11 @@
             WidthRequest="300"
             Style="{StaticResource BodyText}" 
             Margin="0, 20, 0, 0"
-            Text="Avans Hogeschool Lovensdijkstraat is located in Breda, the Netherlands. It is an educational institution specializing in technological innovation, safety, and resilience in cities and environments.&#10;The institution has three buildings on Lovensdijkstraat: Lovensdijkstraat 63 (LD: white building to the right of the square), Lovensdijkstraat 61 (LA: white building to the left of the square), and villa 3."/>
-
+            Text="{Binding CurrentSight.Description}"/>
             <Button Style="{StaticResource PrimaryButton}" 
                     Margin="0, 20, 0, 0"
-                    Text="Return to Map"/>
+                    Text="Return to Map"
+                    Command="{Binding NavigateToPreviousViewCommand}"/>
         </VerticalStackLayout>
     </Grid>
     

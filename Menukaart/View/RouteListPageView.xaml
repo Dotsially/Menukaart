@@ -23,7 +23,11 @@
         <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Command="{Binding NavigateToTutorialCommand}"/>
 
         <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <CollectionView ItemsSource="{Binding Routes}">
+            <CollectionView ItemsSource="{Binding Routes}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedRoute}"
+                            SelectionChangedCommand="{Binding ItemSelectedCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedRoute}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
