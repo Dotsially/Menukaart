@@ -1,34 +1,31 @@
-﻿using System;
-using System.Collections;
+﻿using Menukaart.DataManagement;
+using Menukaart.DataManagement.DataTypes;
+using SQLite;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Menukaart.DataManagement.DataTypes;
-using SQLite;
 
-namespace Menukaart.DataManagement
+namespace UnitTestMenukaart.Class
 {
-    public class DatabaseService : IDatabaseService
+    public class TestDatabaseService : IDatabaseService
     {
         private readonly SQLiteAsyncConnection _connection;
 
-        public DatabaseService()
+        public TestDatabaseService()
         {
-            _connection = new SQLiteAsyncConnection(Constants.DatabasePath);
-            _connection.CreateTablesAsync<Session, Datalink>();
-            WipeAll();
+            string databasePath = Path.Combine(Directory.GetCurrentDirectory(), "UnitTestSQLDB.db3");
+            _connection = new SQLiteAsyncConnection(databasePath);
+
+            Task.Run(async () => await Init());
         }
-        
-        // Sessions:
-        // Creeër een session object
-        // Sla het object op in de database
-        // CreateSession(session)
-        // Voeg sights toe
-        // session.AddSights(id)
-        // Update de sessions in de database
-        // UpdateSession(session)
+
+        public async Task Init()
+        {
+            await _connection.CreateTablesAsync<Session, Datalink>();
+        }
+
 
         public async Task<List<Session>> GetSessions()
         {
@@ -78,21 +75,6 @@ namespace Menukaart.DataManagement
             return await _connection.DeleteAsync(session);
         }
 
-        public async Task WipeAll()
-        {
-            WipeSessions();
-            WipeDatalinks();
-        }
-
-        public async Task WipeSessions()
-        {
-            await _connection.DeleteAllAsync<Session>();
-        }
-        public async Task WipeDatalinks()
-        {
-            await _connection.DeleteAllAsync<Datalink>();
-        }
-
         public async Task<List<Datalink>> getDatalinks()
         {
             return await _connection.Table<Datalink>().ToListAsync();
@@ -124,6 +106,5 @@ namespace Menukaart.DataManagement
                 await _connection.DeleteAsync(datalink);
             }
         }
-
     }
 }

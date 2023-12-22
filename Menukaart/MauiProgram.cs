@@ -22,8 +22,6 @@ namespace Menukaart
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            new SightData();
-
             builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddTransient<DatabasePageView>();
             builder.Services.AddTransient<RouteListPageViewModel>();
