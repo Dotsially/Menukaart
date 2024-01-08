@@ -18,7 +18,6 @@ namespace Menukaart.DataManagement
         {
             _connection = new SQLiteAsyncConnection(Constants.DatabasePath);
             _connection.CreateTablesAsync<Session, Datalink>();
-            WipeAll();
         }
         
         // Sessions:

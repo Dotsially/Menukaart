@@ -15,7 +15,7 @@ namespace Menukaart.ViewModel
         public DatabasePageViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
-            CreateSession();
+            CreatePlaceholderSession();
             LoadSessions();
         }
 
@@ -88,18 +88,25 @@ namespace Menukaart.ViewModel
 
 
         //Test code
-        private async Task CreateSession()
+        private async Task CreatePlaceholderSession()
         {
+            var sessions = await _databaseService.GetSessions();
+            if (sessions.Count != 0)
+                return;
+
+
             Session session = new Session();
             await _databaseService.CreateSession(session);
 
             session.time += 20;
             session.distance = 9439;
 
-            for (int i = 1; i < 20; i++) { 
+            for (int i = 1; i < 20; i++)
+            {
                 session.AddSight(i);
             }
             await _databaseService.UpdateSession(session);
+
         }
 
         // Test code
