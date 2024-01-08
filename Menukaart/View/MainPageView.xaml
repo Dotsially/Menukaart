@@ -37,6 +37,9 @@
 
         <VerticalStackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Spacing="20" Margin="0, 20, 0, 0">
 
+            <Label Style="{StaticResource BodyText}" FontSize="12" Text="An app proudly made by:" HorizontalOptions="Center"/>
+            <Image Source="ags_logo.png" HeightRequest="75"/>
+
             <Button Style="{StaticResource PrimaryButton}" Text="Start a Route" Command="{Binding NaviageToRouteListCommand}"/>
             <Button Style="{StaticResource PrimaryButton}" Text="Show passed session" Command="{Binding NavigateToSessionListCommand}"/>
             
