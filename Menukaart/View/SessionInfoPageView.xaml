@@ -12,6 +12,7 @@
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
+        <Button Grid.Row="0" Margin="20" Text="Delete" VerticalOptions="Start" HorizontalOptions="Start" Command="{Binding DeleteSessionCommand}"/>
         <Label Grid.Row="0" Margin="20"  Style="{StaticResource TitleText}" Text="{Binding Session.id, StringFormat='Session {0}'}" VerticalOptions="Start" HorizontalOptions="Center"/>
         <Button Grid.Row="0" Margin="20" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Start" Command="{Binding NavigateToTutorialCommand}" HorizontalOptions="End"/>
 

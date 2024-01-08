@@ -62,10 +62,12 @@ namespace Menukaart.ViewModel
                     var savedSights = await _databaseService.GetDatalinkFromSessionId(selectedSession.id);
 
                     var navigationParameter = new Dictionary<string, object>
-            {
-                { "SelectedSession", selectedSession },
-                { "SavedSights", savedSights },
-            };
+                        {
+                            { "SelectedSession", selectedSession },
+                            { "SavedSights", savedSights },
+                            { "DatabaseService", _databaseService},
+                        };
+
                     Debug.WriteLine($"clicked session {selectedSession.id}");
                     await Shell.Current.GoToAsync(nameof(SessionInfoPageView), navigationParameter);
 

@@ -7,9 +7,20 @@ namespace Menukaart.View;
 
 public partial class DatabasePageView : ContentPage
 {
+    private DatabaseService _db;
+
 	public DatabasePageView(DatabaseService databaseService)
 	{
 		InitializeComponent();
-        BindingContext = new DatabasePageViewModel(databaseService);
+        _db = databaseService;
+    }
+
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        var context = new DatabasePageViewModel(_db);
+        BindingContext = context;
     }
 }
