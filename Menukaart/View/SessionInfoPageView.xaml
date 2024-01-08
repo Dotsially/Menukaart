@@ -12,7 +12,7 @@
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Margin="20" Text="Delete" VerticalOptions="Start" HorizontalOptions="Start" Command="{Binding DeleteSessionCommand}"/>
+        <Button Grid.Row="0" Margin="20" Text="Delete" BackgroundColor="Red" VerticalOptions="Start" HorizontalOptions="Start" Command="{Binding DeleteSessionCommand}"/>
         <Label Grid.Row="0" Margin="20"  Style="{StaticResource TitleText}" Text="{Binding Session.id, StringFormat='Session {0}'}" VerticalOptions="Start" HorizontalOptions="Center"/>
         <Button Grid.Row="0" Margin="20" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Start" Command="{Binding NavigateToTutorialCommand}" HorizontalOptions="End"/>
 
@@ -24,6 +24,7 @@
                             <VerticalStackLayout Margin="5">
                                 <Label Text="{Binding Name}" Style="{StaticResource SubHeadline}" />
                                 <Label Text="{Binding Description}" Style="{StaticResource ListText}"/>
+                                <Image Source="{Binding Image.Source}" Aspect="AspectFill"/>
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>
