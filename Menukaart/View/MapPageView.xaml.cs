@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.Input;
+
 using Menukaart.DataManagement.DataTypes;
 using Menukaart.DataManagement.Menukaart.Model;
 using Menukaart.ViewModel;
@@ -38,7 +40,6 @@ public partial class MapPageView : ContentPage
     {
         this.geolocation = geolocation;
         InitializeComponent();
-
         //List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
 
         //foreach(var polylinePoint in polylinePoints)
@@ -67,7 +68,7 @@ public partial class MapPageView : ContentPage
         distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
         Debug.WriteLine(distance);
 
-        if(oldDistance == 0)
+        if (oldDistance == 0)
         {
 
         }
@@ -77,13 +78,13 @@ public partial class MapPageView : ContentPage
             session.distance = (int)distanceWalked;
         }
 
-        
 
-        if(distance <= 0.02)
+
+        if (distance <= 0.02)
         {
             ArrivedAtLocation();
         }
-      
+
         userLocation = new MapSpan(location, 0.01, 0.01);
         map.MoveToRegion(userLocation);
     }
@@ -102,10 +103,10 @@ public partial class MapPageView : ContentPage
 
         map.Pins.Clear();
         var newPoi = Route.SightList[routeEnumerator];
-        map.Pins.Add(new Pin{
+        map.Pins.Add(new Pin {
             Location = newPoi.Location,
             Label = newPoi.Name,
-            Address = ""});
+            Address = "" });
     }
 
     private async void Pin_MarkerClicked(object sender, EventArgs e)
@@ -153,15 +154,15 @@ public partial class MapPageView : ContentPage
 
 
     private void Initialize(RouteListPageModel route)
-    { 
+    {
         Polyline testPolyline = new Polyline();
         session = new Session();
         userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
         var poi = route.SightList[0];
         pointOfInterest = poi.Location;
-        
+
         map.IsShowingUser = true;
-        
+
         Pin pin = new Pin()
         {
             Location = poi.Location,
@@ -179,6 +180,15 @@ public partial class MapPageView : ContentPage
         base.OnAppearing();
         Initialize(Route);
 
-        
+    }
+
+    async void StopSession(object sender, EventArgs args)
+    {
+       await Shell.Current.GoToAsync(nameof(View.RouteListPageView));
+    }
+
+    async void NavigateToTutorial(object sender, EventArgs args)
+    {
+        await Shell.Current.GoToAsync(nameof(TutorialPageView));
     }
 }
