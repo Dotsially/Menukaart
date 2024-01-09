@@ -3,11 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              x:Class="Menukaart.View.MapPageView"
+             xmlns:viewmodel="clr-namespace:Menukaart.ViewModel"
+             x:DataType="viewmodel:MapPageViewModel"
              Shell.NavBarIsVisible="False">
 
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
@@ -22,8 +25,11 @@
 
         <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Clicked="NavigateToTutorial"/>
 
-        <maps:Map Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="map" MapType="Street" VerticalOptions="FillAndExpand" >
+        <!-- TODO this might not show properly -->
+        <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Source="{Binding CurrentSight.Image.Source}"/>
+
+        <maps:Map Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="map" MapType="Street" VerticalOptions="FillAndExpand" >
         </maps:Map>
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Stop Session" VerticalOptions="Center" Clicked="StopSession"/>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Stop Session" VerticalOptions="Center" Clicked="StopSession"/>
     </Grid>
 </ContentPage>
