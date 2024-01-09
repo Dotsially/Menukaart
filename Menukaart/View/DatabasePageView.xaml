@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <Label Grid.Row="0" Margin="20"  Style="{DynamicResource TitleText}" Text="Sessie scherm" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Label Grid.Row="0" Margin="20"  Style="{DynamicResource TitleText}" Text="Sessions" VerticalOptions="Center" HorizontalOptions="Center"/>
         <Button Grid.Row="0" Margin="20" Style="{DynamicResource HelpButton}" Text="?" VerticalOptions="Center" Command="{Binding NavigateToTutorialCommand}" HorizontalOptions="End"/>
         
         <!-- List on Top -->
@@ -32,11 +32,11 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label Grid.Column="0" Text="{Binding id, StringFormat='Sessie {0}'}" />
+                                <Label Grid.Column="0" Text="{Binding id, StringFormat='Session {0}'}" />
                                 <Label Grid.Column="1" Text="{Binding date, StringFormat='{0:d}'}" HorizontalOptions="End" />
                             </Grid>
-                            <Label Text="{Binding time, StringFormat='Tijd in minuten: {0}'}" />
-                            <Label Text="{Binding distance, StringFormat='Afstand: {0} meter'}" />
+                            <Label Text="{Binding time, StringFormat='Time in minutes: {0}'}" />
+                            <Label Text="{Binding distance, StringFormat='Distance: {0} meter'}" />
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>
@@ -47,7 +47,7 @@
         <Button Grid.Row="2"
                 Margin="10"
             Style="{DynamicResource PrimaryButton}"
-            Text="Terug naar het hoofdscherm"
+            Text="Back to main menu"
             Command="{Binding BackCommand}" />
     </Grid>
 </ContentPage>

@@ -13,17 +13,22 @@ using Menukaart.Model;
 using System.Text.Json.Nodes;
 using System.Net;
 using System.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Menukaart.DataManagement;
 namespace Menukaart.View;
 
 [QueryProperty(nameof(Route), "route")]
+[QueryProperty(nameof(DatabaseService), "DatabaseService")]
 public partial class MapPageView : ContentPage
 {
     private readonly IGeolocation geolocation;
     Location pointOfInterest;
     MapSpan userLocation;
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
-    double distance = 0;
+    double distanceToDestination = 0;
+    Location prevLocation;
     Session session;
+    DateTime starttime;
 
     private RouteListPageModel _route;
     public RouteListPageModel Route
@@ -37,9 +42,21 @@ public partial class MapPageView : ContentPage
     }
     int routeEnumerator = 0;
 
+    private DatabaseService _databaseService;
+    public DatabaseService DatabaseService
+    {
+        get => _databaseService;
+        set
+        {
+            _databaseService = value;
+            OnPropertyChanged();
+        }
+    }
+
     public MapPageView(IGeolocation geolocation)
     {
         this.geolocation = geolocation;
+        starttime = DateTime.Now;
         InitializeComponent();
     }
 
@@ -56,30 +73,22 @@ public partial class MapPageView : ContentPage
     async void GeolocationChanged(object sender, GeolocationLocationChangedEventArgs e)
     {
         Location location = new Location(e.Location.Latitude, e.Location.Longitude);
+        if (prevLocation == null) prevLocation = location;
 
-        double oldDistance = distance;
-        distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
-        Debug.WriteLine(distance);
+        distanceToDestination = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
+        Debug.WriteLine($"DISTANCE: {distanceToDestination}");
 
-        if (oldDistance == 0)
-        {
+        var distance = (int)(Location.CalculateDistance(location, prevLocation, DistanceUnits.Kilometers) * 1000d);
+        session.distance += distance;
 
-        }
-        else
-        {
-            double distanceWalked = oldDistance * 1000.0 - distance * 1000.0;
-            session.distance = (int)distanceWalked;
-        }
-
-
-
-        if (distance <= 0.02)
+        if (distanceToDestination <= 0.02)
         {
             ArrivedAtLocation();
         }
 
         userLocation = new MapSpan(location, 0.01, 0.01);
 
+        map.MapElements.Clear();
         Polyline polyline = new Polyline();
         polyline.StrokeWidth = 7;
 
@@ -94,19 +103,20 @@ public partial class MapPageView : ContentPage
         map.MapElements.Add(polyline);
         
         map.MoveToRegion(userLocation);
+        prevLocation = location;
     }
 
     void ArrivedAtLocation()
     {
-        //sessie code 
         session.AddSight(Route.SightList[routeEnumerator].Id);
         
-        if (routeEnumerator < Route.SightList.Count)
+        if (routeEnumerator < Route.SightList.Count - 1)
         {
             routeEnumerator++;
         }
         else
         {
+            //TODO als route voorbij is idk
             routeEnumerator = 0;
         }
 
@@ -116,6 +126,8 @@ public partial class MapPageView : ContentPage
             Location = newPoi.Location,
             Label = newPoi.Name,
             Address = "" });
+
+        pointOfInterest = newPoi.Location;
     }
 
     private async void Pin_MarkerClicked(object sender, EventArgs e)
@@ -213,7 +225,15 @@ public partial class MapPageView : ContentPage
 
     async void StopSession(object sender, EventArgs args)
     {
-       //Sla hier sessie op in database
+        //Sla hier sessie op in database
+        Debug.WriteLine(session);
+
+        var timespent = DateTime.Now - starttime;
+        session.time = (int)timespent.TotalSeconds;
+
+        await _databaseService.CreateSession(session);
+        await _databaseService.UpdateSession(session);
+
        await Shell.Current.GoToAsync(nameof(View.RouteListPageView));
     }
 

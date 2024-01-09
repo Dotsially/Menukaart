@@ -7,6 +7,7 @@ namespace Menukaart.View;
 
 [QueryProperty(nameof(Session), "SelectedSession")]
 [QueryProperty(nameof(SavedSights), "SavedSights")]
+[QueryProperty(nameof(DatabaseService), "DatabaseService")]
 public partial class SessionInfoPageView : ContentPage
 {
     private Session _session;
@@ -31,6 +32,17 @@ public partial class SessionInfoPageView : ContentPage
         }
     }
 
+    private DatabaseService _databaseService;
+    public DatabaseService DatabaseService
+    {
+        get => _databaseService;
+        set
+        {
+            _databaseService = value;
+            OnPropertyChanged();
+        }
+    }
+
 
     public SessionInfoPageView()
 	{
@@ -41,6 +53,6 @@ public partial class SessionInfoPageView : ContentPage
     {
         base.OnAppearing();
 
-        BindingContext = new SessionInfoPageViewModel(_session, _savedSights);
+        BindingContext = new SessionInfoPageViewModel(_session, _savedSights, _databaseService);
     }
 }

@@ -12,6 +12,7 @@
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
+        <Button Grid.Row="0" Margin="20" Text="Delete" BackgroundColor="Red" VerticalOptions="Start" HorizontalOptions="Start" Command="{Binding DeleteSessionCommand}"/>
         <Label Grid.Row="0" Margin="20"  Style="{StaticResource TitleText}" Text="{Binding Session.id, StringFormat='Session {0}'}" VerticalOptions="Start" HorizontalOptions="Center"/>
         <Button Grid.Row="0" Margin="20" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Start" Command="{Binding NavigateToTutorialCommand}" HorizontalOptions="End"/>
 
@@ -23,6 +24,7 @@
                             <VerticalStackLayout Margin="5">
                                 <Label Text="{Binding Name}" Style="{StaticResource SubHeadline}" />
                                 <Label Text="{Binding Description}" Style="{StaticResource ListText}"/>
+                                <Image Source="{Binding Image.Source}" Aspect="AspectFill"/>
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>
@@ -39,12 +41,12 @@
                     <Label Text="Total distance" HorizontalOptions="Center" Style="{StaticResource SubHeadline}"/>
                     <Label Text="{Binding Session.distance, StringFormat='{0} meter'}" HorizontalOptions="Center" Margin="0,0,0,10" Style="{StaticResource BodyText}" />
                     <Label Text="Total spend time" HorizontalOptions="Center" Style="{StaticResource SubHeadline}"/>
-                    <Label Text="{Binding Session.time, StringFormat='{0} seconden'}" HorizontalOptions="Center" Style="{StaticResource BodyText}"  />
+                    <Label Text="{Binding Session.time, StringFormat='{0} minutes'}" HorizontalOptions="Center" Style="{StaticResource BodyText}"  />
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>
             
     
-        <Button Text="Back" Command="{Binding BackCommand}" Grid.Row="3" Margin="10" MaximumHeightRequest="70" VerticalOptions="End"/>
+        <Button Text="Return to sessions" Command="{Binding BackCommand}" Grid.Row="3" Margin="10" MaximumHeightRequest="70" VerticalOptions="End"/>
     </Grid>
 </ContentPage>
