@@ -23,11 +23,14 @@ namespace Menukaart.ViewModel
         [ObservableProperty]
         private Session _session;
 
-        public SessionInfoPageViewModel(Session session, List<Datalink> links) 
+        private DatabaseService _databaseService;
+
+        public SessionInfoPageViewModel(Session session, List<Datalink> links, DatabaseService databaseService) 
         {
             Debug.WriteLine(session.date);
             connectSightToLinks(links);
             Session = session;
+            _databaseService = databaseService;
         }
 
         private void connectSightToLinks(List<Datalink> links)
@@ -45,6 +48,14 @@ namespace Menukaart.ViewModel
 
             Sights = new ObservableCollection<Sight>(visitedSights);
         }
+
+        [RelayCommand]
+        Task DeleteSession()
+        {
+            _databaseService.DeleteSession(Session);
+            return Back();
+        }
+
 
         [RelayCommand]
         Task NavigateToTutorial() => Shell.Current.GoToAsync(nameof(TutorialPageView));
