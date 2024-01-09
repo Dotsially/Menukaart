@@ -35,27 +35,27 @@ namespace Menukaart.ViewModel
            
             Routes.Add(new()
             {
-                Name = "Route 1",
-                Description = "Let's cook!",
-                ImageName = SightData.SightList[0].Image.Source.ToString(),
+                Name = "Holland Delight",
+                Description = "Some nice typical Dutch restaurants",
+                ImageSource = SightData.SightList[0].Image.Source,
                 SightList = new List<Sight>{ SightData.SightList[0], SightData.SightList[1], SightData.SightList[3] }
             });
             Debug.WriteLine(Routes.First().SightList.First().Name);
 
-            Debug.WriteLine("BS" + Routes.First().ImageName);
+            Debug.WriteLine("BS" + Routes.First().ImageSource);
             Routes.Add(new()
             {
-                Name = "Route 2",
-                Description = "Let's cook!",
-                ImageName = SightData.SightList[2].Image.Source.ToString(),
-                SightList = new List<Sight> { SightData.SightList[2], SightData.SightList[4], SightData.SightList[5] }
+                Name = "Kids menu",
+                Description = "Great for little explorers",
+                ImageSource = SightData.SightList[2].Image.Source,
+                SightList = new List<Sight> { SightData.SightList[2], SightData.SightList[5], SightData.SightList[5] }
             });
 
             Routes.Add(new()
             {
-                Name = "Route 3",
-                Description = "Let's cook!",
-                ImageName = SightData.SightList[7].Image.ToString(),
+                Name = "Vegan route",
+                Description = "Enjoy a lack of meat",
+                ImageSource = SightData.SightList[7].Image.Source,
                 SightList = new List<Sight> { SightData.SightList[7], SightData.SightList[6], SightData.SightList[8] }
             });
 
@@ -63,7 +63,7 @@ namespace Menukaart.ViewModel
             {
                 Name = "Route 4",
                 Description = "Let's cook!",
-                ImageName = SightData.SightList[9].Image.ToString(),
+                ImageSource = SightData.SightList[9].Image.Source,
                 SightList = new List<Sight> { SightData.SightList[9], SightData.SightList[10], SightData.SightList[11] }
             });
         }

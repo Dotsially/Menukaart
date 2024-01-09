@@ -30,15 +30,15 @@
                             SelectionChangedCommandParameter="{Binding SelectedRoute}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="{Binding ImageName}" Aspect="AspectFit" MaximumHeightRequest="75"  MaximumWidthRequest="75"/>
+                            <Image Source="{Binding ImageSource} " Aspect="Fill" WidthRequest="75" HeightRequest="75"/>
 
-                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="5">
                                 <Label Style="{StaticResource BodyText}" Text="{Binding Name}" FontAttributes="Bold"/>
                                 <Label Style="{StaticResource BodyText}" Text="{Binding Description}"/>
                             </VerticalStackLayout>

@@ -127,6 +127,16 @@ public partial class MapPageView : ContentPage
             Label = newPoi.Name,
             Address = "" });
 
+        Pin pin = new Pin()
+        {
+            Location = newPoi.Location,
+            Label = newPoi.Name,
+            Address = ""
+        };
+
+        pin.MarkerClicked += Pin_MarkerClicked;
+        map.Pins.Add(pin);
+
         pointOfInterest = newPoi.Location;
     }
 
