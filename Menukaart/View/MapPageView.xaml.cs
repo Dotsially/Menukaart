@@ -78,7 +78,7 @@ public partial class MapPageView : ContentPage
             ArrivedAtLocation();
         }
 
-        userLocation = new MapSpan(location, 0.01, 0.01);
+        userLocation = new MapSpan(location, location.Latitude, location.Longitude);
 
         Polyline testPolyline = new Polyline();
 
@@ -149,7 +149,9 @@ public partial class MapPageView : ContentPage
 
         string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={googleApiKey}";
 
-   
+        Trace.WriteLine($"Userlocation: {userLocationURLString} " +
+            $"TargetLocation: {landmarkLocationURLString}" +
+            $"URL: {requestURL}");
         var response = client.GetAsync(requestURL).GetAwaiter().GetResult();
 
         if (!response.IsSuccessStatusCode)
