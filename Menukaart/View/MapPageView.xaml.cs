@@ -228,11 +228,16 @@ public partial class MapPageView : ContentPage
         //Sla hier sessie op in database
         Debug.WriteLine(session);
 
-        var timespent = DateTime.Now - starttime;
-        session.time = (int)timespent.TotalSeconds;
+        bool saveSession = await DisplayAlert("Save?", "Would you like to save this session?", "Yes", "No");
 
-        await _databaseService.CreateSession(session);
-        await _databaseService.UpdateSession(session);
+        if (saveSession)
+        { 
+            var timespent = DateTime.Now - starttime;
+            session.time = (int)timespent.TotalSeconds;
+
+            await _databaseService.CreateSession(session);
+            await _databaseService.UpdateSession(session);
+        }
 
        await Shell.Current.GoToAsync(nameof(View.RouteListPageView));
     }
