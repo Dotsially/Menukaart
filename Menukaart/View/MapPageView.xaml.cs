@@ -78,18 +78,20 @@ public partial class MapPageView : ContentPage
             ArrivedAtLocation();
         }
 
-        userLocation = new MapSpan(location, 0.01, 0.01);
+        userLocation = new MapSpan(location, location.Latitude, location.Longitude);
 
-        Polyline testPolyline = new Polyline();
+        Polyline polyline = new Polyline();
+        polyline.StrokeWidth = 7;
 
-        List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).GetAwaiter().GetResult();
-        
+        List<Location> polylinePoints = GetRoutePolyline(location, pointOfInterest).GetAwaiter().GetResult();
+        Debug.WriteLine("POLY " + polylinePoints.Count);
+
         foreach (var polylinePoint in polylinePoints)
         {
-            testPolyline.Add(polylinePoint);
+            polyline.Geopath.Add(polylinePoint);
         }
 
-        map.AddLogicalChild(testPolyline);
+        map.MapElements.Add(polyline);
         
         map.MoveToRegion(userLocation);
     }
@@ -148,13 +150,13 @@ public partial class MapPageView : ContentPage
         string landmarkLocationURLString = $"{landmarkLocation.Latitude.ToString().Replace(',', '.')}%2C{landmarkLocation.Longitude.ToString().Replace(',', '.')}";
 
         string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={googleApiKey}";
-
    
         var response = client.GetAsync(requestURL).GetAwaiter().GetResult();
 
         if (!response.IsSuccessStatusCode)
         {
             Trace.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+           
             return [];
         }
 
@@ -168,7 +170,7 @@ public partial class MapPageView : ContentPage
             [0]!.AsObject()
             ["overview_polyline"]!.AsObject()
             ["points"]!.ToString();
-        
+
         PolylineUtility decoder = new();
         var coordinates = decoder.Decode(encodedPolyline);
         
