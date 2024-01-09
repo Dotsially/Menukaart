@@ -83,6 +83,7 @@ public partial class MapPageView : ContentPage
         }
         else
         {
+            //TODO distancewalked klopt niet altijd
             double distanceWalked = oldDistance * 1000.0 - distance * 1000.0;
             session.distance += (int)distanceWalked;
             Debug.WriteLine($"DISTANCE WALKED: {distanceWalked}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -125,6 +126,7 @@ public partial class MapPageView : ContentPage
         }
         else
         {
+            //TODO als route voorbij is idk
             routeEnumerator = 0;
         }
 
