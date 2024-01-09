@@ -6,6 +6,7 @@ using Menukaart.Model;
 using Menukaart.View;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Menukaart.DataManagement;
 
 namespace Menukaart.ViewModel
 {
@@ -25,8 +26,11 @@ namespace Menukaart.ViewModel
             get => _selectedRoute;
             set => SetProperty(ref _selectedRoute, value); }
 
-        public RouteListPageViewModel()
+        private DatabaseService _databaseService;
+
+        public RouteListPageViewModel(DatabaseService databaseService)
         {
+            _databaseService = databaseService;
             SightData sights = new();
            
             Routes.Add(new()
@@ -68,7 +72,8 @@ namespace Menukaart.ViewModel
         {
             var navigationParameter = new Dictionary<string, object>
             {
-                { "route", selectedRoute }
+                { "route", selectedRoute },
+                { "DatabaseService", _databaseService}
             };
             await Shell.Current.GoToAsync($"MapPageView", navigationParameter);
         }

@@ -13,9 +13,12 @@ using Menukaart.Model;
 using System.Text.Json.Nodes;
 using System.Net;
 using System.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Menukaart.DataManagement;
 namespace Menukaart.View;
 
 [QueryProperty(nameof(Route), "route")]
+[QueryProperty(nameof(DatabaseService), "DatabaseService")]
 public partial class MapPageView : ContentPage
 {
     private readonly IGeolocation geolocation;
@@ -24,6 +27,7 @@ public partial class MapPageView : ContentPage
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
     double distance = 0;
     Session session;
+    DateTime starttime;
 
     private RouteListPageModel _route;
     public RouteListPageModel Route
@@ -37,9 +41,21 @@ public partial class MapPageView : ContentPage
     }
     int routeEnumerator = 0;
 
+    private DatabaseService _databaseService;
+    public DatabaseService DatabaseService
+    {
+        get => _databaseService;
+        set
+        {
+            _databaseService = value;
+            OnPropertyChanged();
+        }
+    }
+
     public MapPageView(IGeolocation geolocation)
     {
         this.geolocation = geolocation;
+        starttime = DateTime.Now;
         InitializeComponent();
     }
 
@@ -68,7 +84,8 @@ public partial class MapPageView : ContentPage
         else
         {
             double distanceWalked = oldDistance * 1000.0 - distance * 1000.0;
-            session.distance = (int)distanceWalked;
+            session.distance += (int)distanceWalked;
+            Debug.WriteLine($"DISTANCE WALKED: {distanceWalked}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
 
 
@@ -102,7 +119,7 @@ public partial class MapPageView : ContentPage
         //sessie code 
         session.AddSight(Route.SightList[routeEnumerator].Id);
         
-        if (routeEnumerator < Route.SightList.Count)
+        if (routeEnumerator < Route.SightList.Count - 1)
         {
             routeEnumerator++;
         }
@@ -216,7 +233,18 @@ public partial class MapPageView : ContentPage
 
     async void StopSession(object sender, EventArgs args)
     {
-       //Sla hier sessie op in database
+        //Sla hier sessie op in database
+        Debug.WriteLine(session);
+
+        var timespent = DateTime.Now - starttime;
+        session.time = timespent.Seconds;
+
+        Debug.WriteLine("REEEEEEEEEEEEEEEE");
+        Debug.WriteLine(_databaseService);
+
+        await _databaseService.CreateSession(session);
+        await _databaseService.UpdateSession(session);
+
        await Shell.Current.GoToAsync(nameof(View.RouteListPageView));
     }
 

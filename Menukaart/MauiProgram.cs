@@ -24,6 +24,7 @@ namespace Menukaart
 
             builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddTransient<DatabasePageView>();
+            builder.Services.AddTransient<RouteListPageView>();
             builder.Services.AddTransient<RouteListPageViewModel>();
 
 
