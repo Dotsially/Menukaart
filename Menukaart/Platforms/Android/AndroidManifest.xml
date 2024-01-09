@@ -4,7 +4,7 @@
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o"/>
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />	
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>

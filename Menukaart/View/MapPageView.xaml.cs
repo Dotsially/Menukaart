@@ -53,7 +53,7 @@ public partial class MapPageView : ContentPage
         var success = await Geolocation.StartListeningForegroundAsync(request);
     }
 
-    void GeolocationChanged(object sender, GeolocationLocationChangedEventArgs e)
+    async void GeolocationChanged(object sender, GeolocationLocationChangedEventArgs e)
     {
         Location location = new Location(e.Location.Latitude, e.Location.Longitude);
 
@@ -79,6 +79,18 @@ public partial class MapPageView : ContentPage
         }
 
         userLocation = new MapSpan(location, 0.01, 0.01);
+
+        Polyline testPolyline = new Polyline();
+
+        List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).GetAwaiter().GetResult();
+        
+        foreach (var polylinePoint in polylinePoints)
+        {
+            testPolyline.Add(polylinePoint);
+        }
+
+        map.AddLogicalChild(testPolyline);
+        
         map.MoveToRegion(userLocation);
     }
 
@@ -122,10 +134,13 @@ public partial class MapPageView : ContentPage
     }
     private async Task<List<Location>> GetRoutePolyline(Location userLocation, Location pointOfInterest)
     {
+        #if __ANDROID__
+        HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidMessageHandler());
+        #else
         HttpClient client = new HttpClient();
-        client.Timeout = TimeSpan.FromSeconds(5);
+        #endif
 
-        List<Location> locations = [];
+        List<Location> locations = new List<Location>();
         Location landmarkLocation = pointOfInterest;
 
         //Nederlandse coordinaten zijn met comma. Google gebruikt punt.
@@ -134,12 +149,12 @@ public partial class MapPageView : ContentPage
 
         string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={googleApiKey}";
 
-
-        HttpResponseMessage response = await client.GetAsync(requestURL);
+   
+        var response = client.GetAsync(requestURL).GetAwaiter().GetResult();
 
         if (!response.IsSuccessStatusCode)
         {
-            Debug.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+            Trace.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
             return [];
         }
 
@@ -153,24 +168,21 @@ public partial class MapPageView : ContentPage
             [0]!.AsObject()
             ["overview_polyline"]!.AsObject()
             ["points"]!.ToString();
-
-        // Decode polyline using the NuGet package
+        
         PolylineUtility decoder = new();
         var coordinates = decoder.Decode(encodedPolyline);
-
-        // Add all positions of the route to a list
+        
         foreach (var coordinate in coordinates)
         {
             locations.Add(new Location(coordinate.Latitude, coordinate.Longitude));
         }
 
-        return locations;
+        return locations; 
     }
 
 
     private void Initialize(RouteListPageModel route)
     {
-        Polyline testPolyline = new Polyline();
         session = new Session();
         userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
         var poi = route.SightList[0];
@@ -187,15 +199,7 @@ public partial class MapPageView : ContentPage
         pin.MarkerClicked += Pin_MarkerClicked;
         map.Pins.Add(pin);
 
-        List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
-
-        foreach (var polylinePoint in polylinePoints)
-        {
-            testPolyline.Add(polylinePoint);
-        }
-
-        map.AddLogicalChild(testPolyline);
-
+      
         StartListening();
     }
 
