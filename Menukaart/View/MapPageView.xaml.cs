@@ -80,6 +80,7 @@ public partial class MapPageView : ContentPage
 
         userLocation = new MapSpan(location, 0.01, 0.01);
 
+        map.MapElements.Clear();
         Polyline polyline = new Polyline();
         polyline.StrokeWidth = 7;
 
