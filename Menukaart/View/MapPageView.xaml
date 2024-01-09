@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             x:Class="Menukaart.View.MapPageView"
+             Shell.NavBarIsVisible="False">
+
+
+    <Grid Margin="10, 20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleText}" Text="Map" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
+
+        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource HelpButton}" Text="?" VerticalOptions="Center" Clicked="NavigateToTutorial"/>
+
+        <maps:Map Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="map" MapType="Street" VerticalOptions="FillAndExpand" Margin="0,10" >
+        </maps:Map>
+        
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Stop Session" VerticalOptions="Center" Clicked="StopSession" Margin="10"/>
+    </Grid>
+</ContentPage>

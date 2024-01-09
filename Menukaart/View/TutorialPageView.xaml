@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Menukaart.ViewModel"
+             xmlns:model="clr-namespace:Menukaart.Model"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:DataType="viewmodel:TutorialPageViewModel"
+             x:Class="Menukaart.View.TutorialPageView"
+             Shell.NavBarIsVisible="False">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+            <CarouselView ItemsSource="{Binding TutorialSections}" IndicatorView="TutorialIndicator" Loop="false" Grid.Row="0">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TutorialPageModel">
+
+                        <VerticalStackLayout Spacing="20">
+                            <Label Style="{StaticResource TitleText}" Text="{Binding Title}" HorizontalOptions="Center"/>
+                        <Image Source="{Binding ImageName}" HeightRequest="100">
+                            <Image.Behaviors>
+                                <mct:IconTintColorBehavior TintColor="{StaticResource Primary}"/>
+                            </Image.Behaviors>
+                        </Image>
+                            <Label Style="{StaticResource BodyText}" Text="{Binding Description}"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="1">
+                <IndicatorView x:Name="TutorialIndicator" IndicatorSize="10" IndicatorColor="{StaticResource Gray300}" SelectedIndicatorColor="{StaticResource Primary}"/>
+            </HorizontalStackLayout>
+
+        <Button Style="{StaticResource PrimaryButton}" Text="Go back" Grid.Row="2" Margin="0, 20, 0, 0" Command="{Binding BackCommand}"/>
+
+    </Grid>
+</ContentPage>

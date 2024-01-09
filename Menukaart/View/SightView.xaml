@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Menukaart.View.SightView"
+             xmlns:viewmodel="clr-namespace:Menukaart.ViewModel"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             Shell.NavBarIsVisible="False">
+
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="LightContent"/>
+    </Page.Behaviors>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Spacing="10" Padding="10" Margin="0, 20, 0, 0" x:DataType="viewmodel:MapPageViewModel">
+
+            <!-- Header for the landmark -->
+            <Label x:Name="LandmarkLabel"
+            Text="{Binding CurrentSight.Name}"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="Center" 
+            Style="{StaticResource TitleText}"/>
+
+            <!-- Image placeholder -->
+            <Image x:Name="Placeholder"
+            HorizontalOptions="Center" 
+            VerticalOptions="Start"
+            Margin="0, 20, 0, 0"
+            Source="{Binding CurrentSight.Image.Source}"/>
+
+
+            <!-- Text information placeholder -->
+            <Label x:Name="InformationEditor" 
+            WidthRequest="300"
+            Style="{StaticResource BodyText}" 
+            Margin="0, 20, 0, 0"
+            Text="{Binding CurrentSight.Description}"/>
+            <Button Style="{StaticResource PrimaryButton}" 
+                    Margin="0, 20, 0, 0"
+                    Text="Return to Map"
+                    Command="{Binding NavigateToPreviousViewCommand}"/>
+        </VerticalStackLayout>
+    </Grid>
+    
+</ContentPage>
