@@ -25,7 +25,8 @@ public partial class MapPageView : ContentPage
     Location pointOfInterest;
     MapSpan userLocation;
     const string googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
-    double distance = 0;
+    double distanceToDestination = 0;
+    Location prevLocation;
     Session session;
     DateTime starttime;
 
@@ -72,26 +73,15 @@ public partial class MapPageView : ContentPage
     async void GeolocationChanged(object sender, GeolocationLocationChangedEventArgs e)
     {
         Location location = new Location(e.Location.Latitude, e.Location.Longitude);
+        if (prevLocation == null) prevLocation = location;
 
-        double oldDistance = distance;
-        distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
-        Debug.WriteLine($"DISTANCE: {distance}");
+        distanceToDestination = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
+        Debug.WriteLine($"DISTANCE: {distanceToDestination}");
 
-        if (oldDistance == 0)
-        {
+        var distance = (int)(Location.CalculateDistance(location, prevLocation, DistanceUnits.Kilometers) * 1000d);
+        session.distance += distance;
 
-        }
-        else
-        {
-            //TODO distancewalked klopt niet altijd
-            double distanceWalked = oldDistance * 1000.0 - distance * 1000.0;
-            session.distance += (int)distanceWalked;
-            Debug.WriteLine($"DISTANCE WALKED: {distanceWalked}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
-
-
-
-        if (distance <= 0.02)
+        if (distanceToDestination <= 0.02)
         {
             ArrivedAtLocation();
         }
@@ -113,11 +103,11 @@ public partial class MapPageView : ContentPage
         map.MapElements.Add(polyline);
         
         map.MoveToRegion(userLocation);
+        prevLocation = location;
     }
 
     void ArrivedAtLocation()
     {
-        //sessie code 
         session.AddSight(Route.SightList[routeEnumerator].Id);
         
         if (routeEnumerator < Route.SightList.Count - 1)
@@ -239,10 +229,7 @@ public partial class MapPageView : ContentPage
         Debug.WriteLine(session);
 
         var timespent = DateTime.Now - starttime;
-        session.time = timespent.Seconds;
-
-        Debug.WriteLine("REEEEEEEEEEEEEEEE");
-        Debug.WriteLine(_databaseService);
+        session.time = (int)timespent.TotalSeconds;
 
         await _databaseService.CreateSession(session);
         await _databaseService.UpdateSession(session);
