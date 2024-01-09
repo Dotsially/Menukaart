@@ -12,6 +12,7 @@ using System.Net.NetworkInformation;
 using Menukaart.Model;
 using System.Text.Json.Nodes;
 using System.Net;
+using System.Threading;
 namespace Menukaart.View;
 
 [QueryProperty(nameof(Route), "route")]
@@ -40,14 +41,6 @@ public partial class MapPageView : ContentPage
     {
         this.geolocation = geolocation;
         InitializeComponent();
-        //List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
-
-        //foreach(var polylinePoint in polylinePoints)
-        //{
-        //    testPolyline.Add(polylinePoint);
-        //}
-
-        //map.AddLogicalChild(testPolyline);
     }
 
     //Start listening to user location
@@ -91,7 +84,9 @@ public partial class MapPageView : ContentPage
 
     void ArrivedAtLocation()
     {
+        //sessie code 
         session.AddSight(Route.SightList[routeEnumerator].Id);
+        
         if (routeEnumerator < Route.SightList.Count)
         {
             routeEnumerator++;
@@ -127,23 +122,43 @@ public partial class MapPageView : ContentPage
     }
     private async Task<List<Location>> GetRoutePolyline(Location userLocation, Location pointOfInterest)
     {
-        using HttpClient client = new HttpClient();
+        HttpClient client = new HttpClient();
+        client.Timeout = TimeSpan.FromSeconds(5);
 
+        List<Location> locations = [];
+        Location landmarkLocation = pointOfInterest;
 
-        string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocation.Latitude}%2C{userLocation.Longitude}&destination={pointOfInterest.Latitude}%2C{pointOfInterest.Longitude}&mode=walking&key={googleApiKey}";
+        //Nederlandse coordinaten zijn met comma. Google gebruikt punt.
+        string userLocationURLString = $"{userLocation.Latitude.ToString().Replace(',', '.')}%2C{userLocation.Longitude.ToString().Replace(',', '.')}";
+        string landmarkLocationURLString = $"{landmarkLocation.Latitude.ToString().Replace(',', '.')}%2C{landmarkLocation.Longitude.ToString().Replace(',', '.')}";
+
+        string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={googleApiKey}";
+
 
         HttpResponseMessage response = await client.GetAsync(requestURL);
 
-        JsonObject jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
+        if (!response.IsSuccessStatusCode)
+        {
+            Debug.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+            return [];
+        }
 
+        var jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
 
-        string encodedPolyline = jsonResponse!["routes"]!.AsArray()[0]!.AsObject()["overview_polyline"]!.AsObject()["points"]!.ToString();
+        if (jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
+            throw new ApplicationException("No route possible");
 
-        PolylineUtility decoder = new PolylineUtility();
+        string encodedPolyline =
+            jsonResponse!["routes"]!.AsArray()
+            [0]!.AsObject()
+            ["overview_polyline"]!.AsObject()
+            ["points"]!.ToString();
+
+        // Decode polyline using the NuGet package
+        PolylineUtility decoder = new();
         var coordinates = decoder.Decode(encodedPolyline);
 
-        List<Location> locations = new List<Location>();
-
+        // Add all positions of the route to a list
         foreach (var coordinate in coordinates)
         {
             locations.Add(new Location(coordinate.Latitude, coordinate.Longitude));
@@ -172,6 +187,15 @@ public partial class MapPageView : ContentPage
         pin.MarkerClicked += Pin_MarkerClicked;
         map.Pins.Add(pin);
 
+        List<Location> polylinePoints = GetRoutePolyline(new Location(userLocation.LatitudeDegrees, userLocation.LongitudeDegrees), pointOfInterest).Result;
+
+        foreach (var polylinePoint in polylinePoints)
+        {
+            testPolyline.Add(polylinePoint);
+        }
+
+        map.AddLogicalChild(testPolyline);
+
         StartListening();
     }
 
@@ -179,11 +203,11 @@ public partial class MapPageView : ContentPage
     {
         base.OnAppearing();
         Initialize(Route);
-
     }
 
     async void StopSession(object sender, EventArgs args)
     {
+       //Sla hier sessie op in database
        await Shell.Current.GoToAsync(nameof(View.RouteListPageView));
     }
 
