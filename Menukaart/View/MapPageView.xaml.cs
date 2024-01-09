@@ -78,7 +78,7 @@ public partial class MapPageView : ContentPage
             ArrivedAtLocation();
         }
 
-        userLocation = new MapSpan(location, location.Latitude, location.Longitude);
+        userLocation = new MapSpan(location, 0.01, 0.01);
 
         Polyline polyline = new Polyline();
         polyline.StrokeWidth = 7;
