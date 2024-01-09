@@ -59,7 +59,7 @@ public partial class MapPageView : ContentPage
 
         double oldDistance = distance;
         distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
-        Debug.WriteLine(distance);
+        Debug.WriteLine($"DISTANCE: {distance}");
 
         if (oldDistance == 0)
         {
@@ -117,6 +117,8 @@ public partial class MapPageView : ContentPage
             Location = newPoi.Location,
             Label = newPoi.Name,
             Address = "" });
+
+        pointOfInterest = newPoi.Location;
     }
 
     private async void Pin_MarkerClicked(object sender, EventArgs e)
