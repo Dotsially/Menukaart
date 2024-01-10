@@ -15,6 +15,7 @@ using System.Net;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Menukaart.DataManagement;
+using Plugin.LocalNotification;
 namespace Menukaart.View;
 
 [QueryProperty(nameof(Route), "route")]
@@ -106,10 +107,31 @@ public partial class MapPageView : ContentPage
         prevLocation = location;
     }
 
-    void ArrivedAtLocation()
+    private async Task GenerateNotification(Sight sight)
     {
-        session.AddSight(Route.SightList[routeEnumerator].Id);
-        
+        if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
+        {
+            await LocalNotificationCenter.Current.RequestNotificationPermission();
+        }
+
+        var notification = new NotificationRequest
+        {
+            NotificationId = 100,
+            Title = $"You reached {sight.Name}!",
+            Description = "You have reached your location!",
+
+            Schedule =
+         {
+             NotifyTime = DateTime.Now // Used for Scheduling local notification, if not specified notification will show immediately.
+         }
+        };
+        await LocalNotificationCenter.Current.Show(notification);
+    }
+        void ArrivedAtLocation()
+    {
+        Sight destinationSight = Route.SightList[routeEnumerator];
+        session.AddSight(destinationSight.Id);
+        _ = GenerateNotification(destinationSight);
         if (routeEnumerator < Route.SightList.Count - 1)
         {
             routeEnumerator++;

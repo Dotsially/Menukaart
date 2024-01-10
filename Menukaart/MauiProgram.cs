@@ -4,6 +4,7 @@ using Menukaart.DataManagement.Menukaart.Model;
 using Menukaart.View;
 using Menukaart.ViewModel;
 using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
 
 namespace Menukaart
 {
@@ -14,6 +15,7 @@ namespace Menukaart
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseLocalNotification()
                 .UseMauiCommunityToolkit()
                 .UseMauiMaps()
                 .ConfigureFonts(fonts =>
