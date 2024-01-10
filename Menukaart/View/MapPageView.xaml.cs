@@ -10,11 +10,6 @@ using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
-using System.Net;
-using System.Threading;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Menukaart.DataManagement;
-using Plugin.LocalNotification;
 
 namespace Menukaart.View;
 
@@ -127,7 +122,7 @@ public partial class MapPageView : ContentPage
         };
         await LocalNotificationCenter.Current.Show(notification);
     }
-        void ArrivedAtLocation()
+    void ArrivedAtLocation()
     {
 
         Sight destinationSight = Route.SightList[routeEnumerator];
@@ -163,26 +158,6 @@ public partial class MapPageView : ContentPage
 
     }
 
-    private async Task GenerateNotification(Sight sight)
-    {
-        if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
-        {
-            await LocalNotificationCenter.Current.RequestNotificationPermission();
-        }
-
-        var notification = new NotificationRequest
-        {
-            NotificationId = 100,
-            Title = $"You reached {sight.Name}!",
-            Description = "You have reached your location!",
-
-            Schedule =
-         {
-             NotifyTime = DateTime.Now // Used for Scheduling local notification, if not specified notification will show immediately.
-         }
-        };
-        await LocalNotificationCenter.Current.Show(notification);
-    }
 
 
 
