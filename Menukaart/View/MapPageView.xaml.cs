@@ -1,20 +1,15 @@
-using CommunityToolkit.Mvvm.Input;
-
+using Menukaart.DataManagement;
 using Menukaart.DataManagement.DataTypes;
 using Menukaart.DataManagement.Menukaart.Model;
+using Menukaart.Model;
 using Menukaart.ViewModel;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using Plugin.LocalNotification;
 using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
-using System.Net.NetworkInformation;
-using Menukaart.Model;
 using System.Text.Json.Nodes;
-using System.Net;
-using System.Threading;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Menukaart.DataManagement;
 namespace Menukaart.View;
 
 [QueryProperty(nameof(Route), "route")]
@@ -101,45 +96,35 @@ public partial class MapPageView : ContentPage
         }
 
         map.MapElements.Add(polyline);
-        
+
         map.MoveToRegion(userLocation);
         prevLocation = location;
     }
 
     void ArrivedAtLocation()
     {
-        session.AddSight(Route.SightList[routeEnumerator].Id);
-        
+
+        Sight destinationSight = Route.SightList[routeEnumerator];
+        session.AddSight(destinationSight.Id);
+        _ = GenerateNotification(destinationSight);
         if (routeEnumerator < Route.SightList.Count - 1)
         {
             routeEnumerator++;
         }
         else
         {
-            //TODO als route voorbij is idk
             routeEnumerator = 0;
         }
 
         map.Pins.Clear();
         var newPoi = Route.SightList[routeEnumerator];
-        map.Pins.Add(new Pin {
-            Location = newPoi.Location,
-            Label = newPoi.Name,
-            Address = "" });
-
-        Pin pin = new Pin()
+        map.Pins.Add(new Pin
         {
             Location = newPoi.Location,
             Label = newPoi.Name,
             Address = ""
-        };
-
-        pin.MarkerClicked += Pin_MarkerClicked;
-        map.Pins.Add(pin);
-
-        pointOfInterest = newPoi.Location;
+        });
     }
-
     private async void Pin_MarkerClicked(object sender, EventArgs e)
     {
         // This method will be called when a pin is clicked
@@ -152,17 +137,40 @@ public partial class MapPageView : ContentPage
 
     }
 
+    private async Task GenerateNotification(Sight sight)
+    {
+        if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
+        {
+            await LocalNotificationCenter.Current.RequestNotificationPermission();
+        }
+
+        var notification = new NotificationRequest
+        {
+            NotificationId = 100,
+            Title = $"You reached {sight.Name}!",
+            Description = "You have reached your location!",
+
+            Schedule =
+         {
+             NotifyTime = DateTime.Now // Used for Scheduling local notification, if not specified notification will show immediately.
+         }
+        };
+        await LocalNotificationCenter.Current.Show(notification);
+    }
+
+
+
     private async Task GoToSightView(Sight sight)
     {
         await Navigation.PushAsync(new SightView(new MapPageViewModel(sight, Navigation))); // dont forget to add navigation to viewmodel
     }
     private async Task<List<Location>> GetRoutePolyline(Location userLocation, Location pointOfInterest)
     {
-        #if __ANDROID__
+#if __ANDROID__
         HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidMessageHandler());
-        #else
+#else
         HttpClient client = new HttpClient();
-        #endif
+#endif
 
         List<Location> locations = new List<Location>();
         Location landmarkLocation = pointOfInterest;
@@ -172,13 +180,13 @@ public partial class MapPageView : ContentPage
         string landmarkLocationURLString = $"{landmarkLocation.Latitude.ToString().Replace(',', '.')}%2C{landmarkLocation.Longitude.ToString().Replace(',', '.')}";
 
         string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={googleApiKey}";
-   
+
         var response = client.GetAsync(requestURL).GetAwaiter().GetResult();
 
         if (!response.IsSuccessStatusCode)
         {
             Trace.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
-           
+
             return [];
         }
 
@@ -195,13 +203,13 @@ public partial class MapPageView : ContentPage
 
         PolylineUtility decoder = new();
         var coordinates = decoder.Decode(encodedPolyline);
-        
+
         foreach (var coordinate in coordinates)
         {
             locations.Add(new Location(coordinate.Latitude, coordinate.Longitude));
         }
 
-        return locations; 
+        return locations;
     }
 
 
@@ -223,7 +231,7 @@ public partial class MapPageView : ContentPage
         pin.MarkerClicked += Pin_MarkerClicked;
         map.Pins.Add(pin);
 
-      
+
         StartListening();
     }
 
@@ -241,7 +249,7 @@ public partial class MapPageView : ContentPage
         bool saveSession = await DisplayAlert("Save?", "Would you like to save this session?", "Yes", "No");
 
         if (saveSession)
-        { 
+        {
             var timespent = DateTime.Now - starttime;
             session.time = (int)timespent.TotalSeconds;
 
@@ -249,7 +257,7 @@ public partial class MapPageView : ContentPage
             await _databaseService.UpdateSession(session);
         }
 
-       await Shell.Current.GoToAsync(nameof(View.RouteListPageView));
+        await Shell.Current.GoToAsync(nameof(View.RouteListPageView));
     }
 
     async void NavigateToTutorial(object sender, EventArgs args)
