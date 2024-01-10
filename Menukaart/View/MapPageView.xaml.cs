@@ -1,15 +1,14 @@
 using Menukaart.DataManagement.DataTypes;
 using Menukaart.DataManagement.Menukaart.Model;
+using Menukaart.Model;
 using Menukaart.ViewModel;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using Plugin.LocalNotification;
 using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
-using System.Net.NetworkInformation;
-using Menukaart.Model;
 using System.Text.Json.Nodes;
-using System.Net;
 namespace Menukaart.View;
 
 [QueryProperty(nameof(Route), "route")]
@@ -67,7 +66,7 @@ public partial class MapPageView : ContentPage
         distance = Location.CalculateDistance(location, pointOfInterest, DistanceUnits.Kilometers);
         Debug.WriteLine(distance);
 
-        if(oldDistance == 0)
+        if (oldDistance == 0)
         {
 
         }
@@ -77,19 +76,21 @@ public partial class MapPageView : ContentPage
             session.distance = (int)distanceWalked;
         }
 
-        
 
-        if(distance <= 0.02)
+
+        if (distance <= 0.02)
         {
             ArrivedAtLocation();
         }
-      
+
         userLocation = new MapSpan(location, 0.01, 0.01);
         map.MoveToRegion(userLocation);
     }
 
     void ArrivedAtLocation()
     {
+        _ = GenerateNotification();
+
         session.AddSight(Route.SightList[routeEnumerator].Id);
         if (routeEnumerator < Route.SightList.Count)
         {
@@ -102,14 +103,17 @@ public partial class MapPageView : ContentPage
 
         map.Pins.Clear();
         var newPoi = Route.SightList[routeEnumerator];
-        map.Pins.Add(new Pin{
+        map.Pins.Add(new Pin
+        {
             Location = newPoi.Location,
             Label = newPoi.Name,
-            Address = ""});
+            Address = ""
+        });
     }
 
     private async void Pin_MarkerClicked(object sender, EventArgs e)
     {
+
         // This method will be called when a pin is clicked
         var pin = (Pin)sender;
         Console.WriteLine($"Pin {pin.Label} was clicked");
@@ -118,6 +122,27 @@ public partial class MapPageView : ContentPage
 
         await GoToSightView(selectedSight);
 
+    }
+
+    private async Task GenerateNotification()
+    {
+        if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
+        {
+            await LocalNotificationCenter.Current.RequestNotificationPermission();
+        }
+
+        var notification = new NotificationRequest
+        {
+            NotificationId = 100,
+            Title = "Route reached, continuing route",
+            Description = "You have reached your location!",
+            
+            Schedule =
+            {
+                NotifyTime = DateTime.Now // Used for Scheduling local notification, if not specified notification will show immediately.
+            }
+        };
+        await LocalNotificationCenter.Current.Show(notification);
     }
 
     private async Task GoToSightView(Sight sight)
@@ -153,15 +178,15 @@ public partial class MapPageView : ContentPage
 
 
     private void Initialize(RouteListPageModel route)
-    { 
+    {
         Polyline testPolyline = new Polyline();
         session = new Session();
         userLocation = new MapSpan(new Location(0, 0), 0.01, 0.01);
         var poi = route.SightList[0];
         pointOfInterest = poi.Location;
-        
+
         map.IsShowingUser = true;
-        
+
         Pin pin = new Pin()
         {
             Location = poi.Location,
@@ -179,6 +204,6 @@ public partial class MapPageView : ContentPage
         base.OnAppearing();
         Initialize(Route);
 
-        
+
     }
 }
