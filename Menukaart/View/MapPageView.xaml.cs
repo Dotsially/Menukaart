@@ -89,10 +89,11 @@ public partial class MapPageView : ContentPage
 
     void ArrivedAtLocation()
     {
-        _ = GenerateNotification();
 
-        session.AddSight(Route.SightList[routeEnumerator].Id);
-        if (routeEnumerator < Route.SightList.Count)
+        Sight destinationSight = Route.SightList[routeEnumerator];
+        session.AddSight(destinationSight.Id);
+        _ = GenerateNotification(destinationSight);
+        if (routeEnumerator < Route.SightList.Count -1)
         {
             routeEnumerator++;
         }
@@ -124,7 +125,7 @@ public partial class MapPageView : ContentPage
 
     }
 
-    private async Task GenerateNotification()
+    private async Task GenerateNotification(Sight sight)
     {
         if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
         {
@@ -134,7 +135,7 @@ public partial class MapPageView : ContentPage
         var notification = new NotificationRequest
         {
             NotificationId = 100,
-            Title = "Route reached, continuing route",
+            Title = $"You reached {sight.Name}!",
             Description = "You have reached your location!",
             
             Schedule =
@@ -193,6 +194,8 @@ public partial class MapPageView : ContentPage
             Label = poi.Name,
             Address = ""
         };
+        
+
         pin.MarkerClicked += Pin_MarkerClicked;
         map.Pins.Add(pin);
 
