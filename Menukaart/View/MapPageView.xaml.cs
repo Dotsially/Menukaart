@@ -252,7 +252,7 @@ public partial class MapPageView : ContentPage
         if (saveSession)
         {
             var timespent = DateTime.Now - starttime;
-            session.time = (int)timespent.TotalSeconds;
+            session.time = (int)timespent.TotalMinutes;
 
             await _databaseService.CreateSession(session);
             await _databaseService.UpdateSession(session);

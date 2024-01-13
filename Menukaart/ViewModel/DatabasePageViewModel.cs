@@ -15,7 +15,6 @@ namespace Menukaart.ViewModel
         public DatabasePageViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
-            CreatePlaceholderSession();
             LoadSessions();
         }
 
